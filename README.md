@@ -13,7 +13,7 @@ To install `MorFishJ` clone or download the entire repository. For people not fa
 Open ImageJ/FIJI and press **Plugins --> MorFishJ v0.0.1 --> MorFishJ GUI**. The following GUI should appear.
 
 <p align="center">
-  <img src="MorFishJ_GUI_v0.0.1.png" width="300" title="MorFishJ GUI"><br>
+  <img src="MorFishJ_GUI_v0.0.1.png" width="500" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and open `MorFishJ` as the Plugins menu is often crowded.
@@ -30,7 +30,7 @@ Three morphometric analyses are currently available in `MorFishJ`:
 
 A step by step guide to the software will soon be available online and in PDF version.
 
-Tutorials covering the installation and use of `MorFishJ` will soon be available at the respective [YouTube channel] ("https://www.youtube.com/MorFishJ").
+Tutorials covering the installation and use of `MorFishJ` will soon be available at the respective YouTube channel.
 
 ## Licenses
 
