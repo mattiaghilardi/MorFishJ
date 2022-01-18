@@ -1,5 +1,9 @@
 # MorFishJ
 
+<p align="left">
+  <img src="readme_files/MorFishJ_logo.png" width="100" title="MorFishJ GUI"><br>
+</p>
+
 ## Description
 
 `MorFishJ` is a software package that allows to perform a standardised, reproducible, and semi-automated traditional morphometric analysis of fishes from side-view images. Because ImageJ is commonly used by researchers to extract morphometric data from fish images, `MorFishJ` has been developed as an extension of this software and it can be used in both ImageJ and Fiji distribution.
@@ -13,7 +17,7 @@ To install `MorFishJ` clone or download the entire repository. For people not fa
 Open ImageJ/FIJI and press **Plugins --> MorFishJ v0.0.1 --> MorFishJ GUI**. The following GUI should appear.
 
 <p align="center">
-  <img src="MorFishJ_GUI_v0.0.1.png" width="500" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.0.1.png" width="300" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and open `MorFishJ` as the Plugins menu is often crowded.
@@ -34,8 +38,8 @@ Tutorials covering the installation and use of `MorFishJ` will soon be available
 
 ## Licenses
 
-Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/LICENSE) license.
+Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LICENSE) license.
 
 ## Contributing
 
-Contributions are welcome. You can report bugs, ask questions or provide comments and feedback by filing an issue on Github [here](https://github.com/mattiaghilardi/MorFishJ/Issues). You can also suggest additional analyses that could be useful to others researchers. These will be discussed and potentially implemented.
+Contributions are welcome. You can report bugs, ask questions or provide comments and feedback by filing an issue on Github [here](https://github.com/mattiaghilardi/MorFishJ/issues). You can also suggest additional analyses that could be useful to others researchers. These will be discussed and potentially implemented.
