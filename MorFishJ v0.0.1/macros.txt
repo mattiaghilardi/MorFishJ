@@ -247,8 +247,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "<html>"
-		      + "Not yet available";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#multiple-images";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -331,8 +330,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "<html>"
-		      + "Not yet available";
+	help = "<https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#multiple-images";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");
