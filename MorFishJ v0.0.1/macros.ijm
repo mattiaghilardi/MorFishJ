@@ -1,14 +1,14 @@
 //-----------------------------------------------------------------------------------------//
-//											      //
-//					MorFishJ v0.0.1				      //
-//											      //
-//				Set of ImageJ macros to measure			      //
-//			morphological traits from side-view fish images.		      //
-//											      //
-//				    Author: Mattia Ghilardi				      //
-//				  mattia.ghilardi91@gmail.com			      	      //
-//				      October 27th, 2021				      //
-//											      //
+//                                                                                         //
+//                                     MorFishJ v0.0.1                                     //
+//                                                                                         //
+//                             Set of ImageJ macros to measure                             //
+//                     morphological traits from side-view fish images.                    //
+//                                                                                         //
+//                                 Author: Mattia Ghilardi                                 //
+//                               mattia.ghilardi91@gmail.com                               //
+//                                     June 1st, 2022                                      //
+//                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
 // Check version
