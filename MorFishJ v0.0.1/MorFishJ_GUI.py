@@ -7,7 +7,7 @@ from ij import IJ
 plugin_path = IJ.getDir("plugins") + "/MorFishJ v0.0.1/"
 
 ## Install macros
-macros_path = plugin_path + "macros.txt"
+macros_path = plugin_path + "macros.ijm"
 IJ.run("Install...", "install=[" + macros_path + "]")
 
 ## Create GUI window

@@ -98,7 +98,7 @@ function setScale() {
 	run("Select None");
 }
 
-// "measureAngle": Misure angle in degrees between a line and the horizontal axis.
+// "measureAngle": Measure angle in degrees between a line and the horizontal axis.
 function measureAngle(x1, y1, x2, y2) {
 	dx = x2-x1;
 	dy = y1-y2;
