@@ -7,7 +7,7 @@
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                     June 1st, 2022                                      //
+//                                     July 19th, 2022                                      //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
@@ -247,7 +247,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#multiple-images";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#continued-analysis";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -330,7 +330,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "<https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#multiple-images";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#new-analysis";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");
@@ -1294,6 +1294,7 @@ function setGutTable(i) {
 	Table.set("GD8", i, GD8);
 	Table.set("GD9", i, GD9);
 	Table.set("GD10", i, GD10);
+	Table.set("time", i, time);
 }
 
 // "saveResults": append results to the csv or txt file (analysis: main, head, gut)
