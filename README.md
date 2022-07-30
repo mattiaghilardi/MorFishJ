@@ -24,7 +24,7 @@ To install `MorFishJ`:
 Open ImageJ/FIJI and click **Plugins --> MorFishJ v0.1.0 --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.1.0.png" width="300" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.1.0.png" width="60%" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
