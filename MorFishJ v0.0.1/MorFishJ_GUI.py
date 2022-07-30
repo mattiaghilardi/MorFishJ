@@ -3,15 +3,18 @@ from java.awt import Dimension, Font, GridBagLayout, Color, BorderLayout, GridBa
 from javax.swing.border import EtchedBorder
 from ij import IJ
 
+## MorFishJ version
+version = "v0.0.1"
+
 ## Path to MorFishJ
-plugin_path = IJ.getDir("plugins") + "/MorFishJ v0.0.1/"
+plugin_path = IJ.getDir("plugins") + "/MorFishJ " + version + "/"
 
 ## Install macros
 macros_path = plugin_path + "macros.ijm"
 IJ.run("Install...", "install=[" + macros_path + "]")
 
 ## Create GUI window
-frame = JFrame("MorFishJ v0.0.1")
+frame = JFrame("MorFishJ " + version)
 frame.setResizable(False)
 
 ## Panel 1 - Main Traits
