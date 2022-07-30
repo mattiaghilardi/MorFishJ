@@ -17,14 +17,14 @@ To install `MorFishJ`:
 - for people familiar with GitHub: clone or download the entire repository.
 - for people not familiar with GitHub: click on the green button `Code` in the [project's main page on GitHub](https://github.com/mattiaghilardi/MorFishJ), then click on `Download ZIP`, thus extract the content.
 
-2. Copy the `MorFishJ v0.0.1` folder in the `ImageJ/plugins/` or `Fiji.app/plugins/` directory.
+2. Copy the `MorFishJ v0.1.0` folder in the `ImageJ/plugins/` or `Fiji.app/plugins/` directory.
 
 `MorFishJ` depends on `ImageJ 1.53e`, thus, if ImageJ/Fiji was previously installed, first check the current ImageJ version below the toolbar. If it is older than 1.53e, to update ImageJ click **Help --> Update ImageJ...**, choose the latest version and click OK. Then ImageJ/Fiji must be restarted.
 
-Open ImageJ/FIJI and click **Plugins --> MorFishJ v0.0.1 --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
+Open ImageJ/FIJI and click **Plugins --> MorFishJ v0.1.0 --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.0.1.png" width="300" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.1.0.png" width="300" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
@@ -34,14 +34,12 @@ In Fiji it may be easier to use the `Search` field under the toolbar to find and
 Three morphometric analyses are currently available in `MorFishJ`:
 
 - **Main Traits**: the workhorse of MorFishJ. Performs a complete morphometric analysis measuring 22 traits that cover all body parts visible from side view images, excluding dorsal, pelvic, and anal fins;
-- **Head Angles**: allows to measure three head angles related to vision and feeding (Brandl and Bellwood 2013 *Coral Reefs*; Bellwood et al. 2014 *Proc R Soc B: Biol Sci*; Brandl et al. 2015 *Proc R Soc B: Biol Sci*);
-- **Gut Traits**: allows to measure three intestinal traits related to fish diet (Ghilardi et al. 2021 *Ecol Evol*).
+- **Head Angles**: allows to measure three head angles related to vision and feeding ([Brandl and Bellwood 2013 *Coral Reefs*](https://doi.org/10.1007/s00338-013-1042-0); [Bellwood et al. 2014 *Proc R Soc B: Biol Sci*](https://doi.org/10.1098/rspb.2013.3046); [Brandl et al. 2015 *Proc R Soc B: Biol Sci*](https://doi.org/10.1098/rspb.2015.1147));
+- **Gut Traits**: allows to measure three intestinal traits related to fish diet ([Ghilardi et al. 2021 *Ecol Evol*](https://doi.org/10.1002/ece3.8045)).
 
-## User manual and tutorials
+## User manual
 
 A step by step guide to the software can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/).
-
-Tutorials covering the installation and use of `MorFishJ` will soon be available.
 
 ## Licenses
 

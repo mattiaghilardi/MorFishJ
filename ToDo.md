@@ -1,10 +1,5 @@
 # MorFishJ to do list
 
-## Documentation
-
-1. Create a User Manual (pdf and html)
-2. Link documentation to GUI and help buttons within dialogs
-
 ## New features
 1. Change all measurements to pixels instead of centimetres to allow analysis of images without reference scale. Start with a dialog with three options:
   - no scale available --> set 'px.cm' = 'NA';
@@ -26,4 +21,4 @@
 
 5. Add a simple macro to ease visualisation of analysed images with ROIs
 
-6. New analysis specific for pactoral fin following Wainwright et al. (2002) (DOI: 10.1023/A:1019671131001)
+6. New analysis specific for pectoral fin following Wainwright et al. (2002) (DOI: 10.1023/A:1019671131001)
