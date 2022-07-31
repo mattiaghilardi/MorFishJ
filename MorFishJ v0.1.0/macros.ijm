@@ -7,7 +7,7 @@
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                     July 30th, 2022                                     //
+//                                     July 31st, 2022                                     //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
@@ -22,8 +22,8 @@ function versionCheck() {
 
 //-------------------------------- HELPER FUNCTIONS  --------------------------------------//
 
-// "imageCheck": Check that one image is open for single image analysis and none for multiple analysis
-function imageCheck(type) { // type: single (s) or multiple (m) analysis
+// "checkImage": Check that one image is open for single image analysis and none for multiple analysis
+function checkImage(type) { // type: single (s) or multiple (m) analysis
 	list = getList("image.titles");
 	if (type == "m" && list.length > 0) {
 		exit("<html>"
@@ -39,19 +39,18 @@ function imageCheck(type) { // type: single (s) or multiple (m) analysis
 	}
 }
 
-// "imageSize": Get image's width and height and the center's coordinates
+// "getImageSize": Get image's width and height and the center's coordinates
 var h, w, ymid, xmid;
-function imageSize() {
+function getImageSize() {
 	h = getHeight;
 	w = getWidth;
 	ymid = h/2;
 	xmid = w/2;
 }
 
-// "orientation": Get fish orientation
+// "getOrientation": Get fish orientation
 var side;
-function orientation() {
-	// Orientation
+function getOrientation() {
 	Dialog.create("Orientation");
 	Dialog.setInsets(0, 0, 0);
 	Dialog.addMessage("Which side is the fish facing?");
@@ -247,7 +246,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#continued-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#continued-analysis";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -330,7 +329,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/GUI.html#new-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#new-analysis";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");
@@ -556,10 +555,10 @@ function mainAnalysis() {
 	straightenRotate();
 	
 	// Image size
-	imageSize();
+	getImageSize();
 	
 	// Orientation
-	orientation();
+	getOrientation();
 	
 	
 	// REFERENCE LINES //
@@ -953,10 +952,10 @@ function headAnalysis() {
 	straightenRotate();
 	
 	// Image size
-	imageSize();
+	getImageSize();
 	
 	// Orientation
-	orientation();
+	getOrientation();
 	
 	
 	// REFERENCE LINES AND POINTS //
@@ -1329,7 +1328,7 @@ function saveAdjustedImages() {
 function singleAnalysis(analysis) {
 
 	// Check image
-	imageCheck("s");
+	checkImage("s");
 	
 	// Analysis
 	if (analysis == "main") {
@@ -1355,7 +1354,7 @@ function singleAnalysis(analysis) {
 function multiAnalysis(analysis, type) {
 	
 	// Check image
-	imageCheck("m");
+	checkImage("m");
 	
 	// Setup
 	if (type == "new") {
