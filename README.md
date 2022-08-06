@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/github/license/mattiaghilardi/MorFishJ)](https://choosealicense.com/)
+
 # MorFishJ
 
 <p align="left">
@@ -10,18 +12,17 @@
 
 ## Installation
 
-To install `MorFishJ`:
-
-1. Download MorFishJ:
-
-- for people familiar with GitHub: clone or download the entire repository.
-- for people not familiar with GitHub: click on the green button `Code` in the [project's main page on GitHub](https://github.com/mattiaghilardi/MorFishJ), then click on `Download ZIP`, thus extract the content.
-
-2. Copy the `MorFishJ v0.1.0` folder in the `ImageJ/plugins/` or `Fiji.app/plugins/` directory.
+First install ImageJ (instructions [here](https://imagej.nih.gov/ij/download.html)) or Fiji (instructions [here](https://imagej.net/software/fiji/downloads)).
 
 `MorFishJ` depends on `ImageJ 1.53e`, thus, if ImageJ/Fiji was previously installed, first check the current ImageJ version below the toolbar. If it is older than 1.53e, to update ImageJ click **Help --> Update ImageJ...**, choose the latest version and click OK. Then ImageJ/Fiji must be restarted.
 
-Open ImageJ/FIJI and click **Plugins --> MorFishJ v0.1.0 --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
+To install `MorFishJ`:
+
+1. Download the latest release of MorFishJ from [here](https://github.com/mattiaghilardi/MorFishJ/releases) as a `ZIP` file.
+2. Extract the content.
+3. Copy the folder named `MorFishJ v0.1.0` in the `ImageJ/plugins/` or `Fiji.app/plugins/` directory.
+
+Now `MorFishJ` is installed. Open ImageJ/FIJI and click **Plugins --> MorFishJ v0.1.0 --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
   <img src="readme_files/MorFishJ_GUI_v0.1.0.png" width="60%" title="MorFishJ GUI"><br>
