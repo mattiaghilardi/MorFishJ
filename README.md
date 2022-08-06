@@ -1,5 +1,6 @@
 [![License](https://img.shields.io/github/license/mattiaghilardi/MorFishJ)](https://choosealicense.com/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6969274.svg)](https://doi.org/10.5281/zenodo.6969274)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 # MorFishJ
 
@@ -58,7 +59,7 @@ Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morpho
 A BibTeX entry is:
 
 ```
-@software{ghilardiMorFishJ2022,
+@software{,
   author       = {Mattia Ghilardi},
   title        = {{MorFishJ: A software package for fish traditional 
                    morphometrics}},
