@@ -47,6 +47,30 @@ A step by step guide to the software can be found [here](https://mattiaghilardi.
 
 Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LICENSE) license.
 
+## Citation
+
+To cite `MorFishJ` in publications use:
+
+```
+Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.6969274
+```
+
+A BibTeX entry is:
+
+```
+@software{ghilardiMorFishJ2022,
+  author       = {Mattia Ghilardi},
+  title        = {{MorFishJ: A software package for fish traditional 
+                   morphometrics}},
+  month        = aug,
+  year         = 2022,
+  publisher    = {Zenodo},
+  version      = {v0.1.0},
+  doi          = {10.5281/zenodo.6969274},
+  url          = {https://doi.org/10.5281/zenodo.6969274}
+}
+```
+
 ## Contributing
 
 Contributions are welcome. You can report bugs, ask questions or provide comments and feedback by filing an issue on Github [here](https://github.com/mattiaghilardi/MorFishJ/issues) or writing to mattia.ghilardi91@gmail.com. You can also suggest additional analyses that could be useful to others researchers. These will be discussed and potentially implemented.
