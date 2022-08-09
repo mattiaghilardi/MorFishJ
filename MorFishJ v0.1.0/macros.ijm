@@ -1,13 +1,13 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                     MorFishJ v0.1.0                                     //
+//                                   MorFishJ v0.1.0.9000                                  //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
 //                     morphological traits from side-view fish images.                    //
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                     July 31st, 2022                                     //
+//                                     August 9th, 2022                                    //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
@@ -44,8 +44,8 @@ var h, w, ymid, xmid;
 function getImageSize() {
 	h = getHeight;
 	w = getWidth;
-	ymid = h/2;
-	xmid = w/2;
+	ymid = h / 2;
+	xmid = w / 2;
 }
 
 // "getOrientation": Get fish orientation
@@ -65,11 +65,12 @@ var pw;
 function setScale() {
 	setTool("Line");
 	run("Line Width...", "line=1");
-	waitForUser("Set scale", "Trace a line on a reference \nobject of known length.");
+	message = "Trace a line on a reference \nobject of known length.";
+	waitForUser("Set scale", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 			     + "Straight line selection required!");
-		waitForUser("Set scale", "Trace a line on a reference \nobject of known length.");
+		waitForUser("Set scale", message);
 	}
 	roiManager("Add");
 	Dialog.create("Set scale");
@@ -82,8 +83,8 @@ function setScale() {
 	Dialog.show();
 	num = Dialog.getNumber();
 	unit = Dialog.getChoice();
-	num1 = num/10;
-	num2 = num*2.54;
+	num1 = num / 10;
+	num2 = num * 2.54;
 	if (unit == "cm") {
 		run("Set Scale...", "known=num unit=cm");
 	} else if  (unit == "mm") {
@@ -97,11 +98,95 @@ function setScale() {
 	run("Select None");
 }
 
+// "getScale": Get scale for the image if available
+function getScale() {
+	Dialog.create("Image scale");
+	Dialog.setInsets(0, 0, 0);
+	Dialog.addMessage("If the image has a reference object, or the\n(standard or total) length of the fish is known,\nselect the appropriate option, otherwise click OK.");
+	Dialog.setInsets(5, 100, 0);
+	Dialog.addCheckbox("Reference object", false);
+	Dialog.setInsets(5, 100, 0);
+	Dialog.addCheckbox("Known fish length", false);
+	Dialog.show();
+
+	refObj = Dialog.getCheckbox();
+	fishLength = Dialog.getCheckbox();
+	
+	if (refObj == 1) {
+		getRefScale();
+	} 
+	else if (refObj == 0 && fishLength == 1) {
+		getFishLength();
+	}
+	else if (refObj == 0 && fishLength == 0) {
+		pxcm = "NA";
+	}
+}
+
+// "getRefScale": Get scale from reference object
+var pxcm;
+function getRefScale() {
+	setTool("Line");
+	run("Line Width...", "line=1");
+	message = "Trace a line on a reference\nobject of known length.";
+	waitForUser("Reference scale", message);
+	if (selectionType != 5) {
+		showMessage("<html>"
+			     + "Straight line selection required!");
+		waitForUser("Reference scale", message);
+	}
+	roiManager("Add");
+	px = getValue("Length");
+	Dialog.create("Reference scale");
+	Dialog.setInsets(0, 0, 0);
+	Dialog.addMessage("Please enter the known length\nand select the unit of measurement.");
+	Dialog.setInsets(5, 15, 5);
+	Dialog.addNumber("Known length:", 0);
+	Dialog.setInsets(5, 15, 5);
+	Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
+	Dialog.show();
+	num = Dialog.getNumber();
+	unit = Dialog.getChoice();
+	if (unit == "mm") {
+		num = num / 10;
+	} else if  (unit == "inch") {
+		num = num * 2.54;
+	}
+	unit = "cm";
+	pxcm = px / num;
+	roiManager("Select", 0);
+	roiManager("Rename", "px."+unit);
+	run("Select None");
+}
+
+// "getFishLength": Get known fish length (standard or total)
+var length = "NA", lengthType = "NA";
+function getFishLength() {
+	Dialog.create("Known fish length");
+	Dialog.setInsets(0, 0, 0);
+	Dialog.addMessage("Please enter the known length of the\nfish, select the unit of measurement\nand the type of length measured.");
+	Dialog.setInsets(5, 40, 5);
+	Dialog.addNumber("Fish length:", 0);
+	Dialog.setInsets(5, 40, 5);
+	Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
+	Dialog.setInsets(5, 40, 5);
+	Dialog.addChoice("Length type:", newArray("standard", "total"));
+	Dialog.show();
+	length = Dialog.getNumber();
+	unit = Dialog.getChoice();
+	lengthType = Dialog.getChoice();
+	if (unit == "mm") {
+		length = length / 10;
+	} else if  (unit == "inch") {
+		length = length * 2.54;
+	}
+}
+
 // "measureAngle": Measure angle in degrees between a line and the horizontal axis.
 function measureAngle(x1, y1, x2, y2) {
-	dx = x2-x1;
-	dy = y1-y2;
-	angle = (180.0/PI)*atan(dy/dx);
+	dx = x2 - x1;
+	dy = y1 - y2;
+	angle = (180.0 / PI) * atan(dy / dx);
 	return angle;
 }
 
@@ -116,7 +201,7 @@ var straighten, rotate;
 function straightenRotate() {
 	Dialog.create("Image adjustment");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("The fish must be straight and horizontal.\nIf this is not the case check the box with the\nrequired action, otherwise press OK.");
+	Dialog.addMessage("The fish must be straight and horizontal.\nIf this is not the case check the box with the\nrequired action, otherwise click OK.");
 	Dialog.setInsets(5, 70, 0);
 	Dialog.addCheckbox("Straighten", false);
 	Dialog.setInsets(5, 70, 0);
@@ -129,11 +214,12 @@ function straightenRotate() {
 	if (straighten == 1) {
 		setTool("Polyline");
 		run("Line Width... ");
-		waitForUser("Straighten fish", "Create a segmented line selection following the midline of the fish.\nThe selection must extend from both the snout and caudal fin.\n \nAdjust the selection as needed, then increase the line width\nuntil the whole fish falls within the shaded area.\n \nOnce happy with the selection press OK.");
+		message = "Create a segmented line selection following the midline of the fish.\nThe selection must extend from both the snout and caudal fin.\n \nAdjust the selection as needed, then increase the line width\nuntil the whole fish falls within the shaded area.\n \nOnce happy with the selection click OK.";
+		waitForUser("Straighten fish", message);
 		if (selectionType != 6) {
 			showMessage("<html>"
 				     + "Segmented line selection required!");
-			waitForUser("Straighten fish", "Create a segmented line selection following the midline of the fish.\nThe selection must extend from both the snout and caudal fin.\n \nAdjust the selection as needed, then increase the line width\nuntil the whole fish falls within the shaded area.\n \nOnce happy with the selection press OK.");
+			waitForUser("Straighten fish", message);
 		}
 		run("Straighten...");
 		straightened = getImageID();
@@ -148,11 +234,12 @@ function straightenRotate() {
 	} 
 	else if (straighten == 0 && rotate == 1) {
 		setTool("Line");
-		waitForUser("Rotate image", "Trace a straight line with the same orientation as the fish. \nThe image will be rotated based on the angle of the line selection.");
+		message = "Trace a straight line with the same orientation as the fish. \nThe image will be rotated based on the angle of the line selection.";
+		waitForUser("Rotate image", message);
 		if (selectionType != 5) {
 			showMessage("<html>"
 				     + "Straight line selection required!");
-			waitForUser("Rotate image", "Trace a straight line with the same orientation as the fish. \nThe image will be rotated based on the angle of the line selection.");
+			waitForUser("Rotate image", message);
 		}
 		getLine(x1, y1, x2, y2, lineWidth);
 		rotateImage(x1, y1, x2, y2);
@@ -163,7 +250,7 @@ function straightenRotate() {
 function roiAddRename(name) {
 	roiManager("Add");
 	nROI = RoiManager.size;
-	roiManager("Select", (nROI-1));
+	roiManager("Select", (nROI - 1));
 	roiManager("Rename", name);
 	run("Labels...", "color=white font=12 show use draw bold");
 }
@@ -176,8 +263,8 @@ function lineXline(a, b) {
 	roiManager("Select", b);
 	run("Line to Area");
 	roiManager("Add");
-	c = 1+b;
-	d = 2+b;
+	c = 1 + b;
+	d = 2 + b;
 	roiManager("Select", newArray(c, d));
 	roiManager("AND");
 	roiManager("Add");
@@ -196,7 +283,7 @@ function lineXline(a, b) {
 // Modified from: https://forum.image.sc/t/how-to-get-xy-coordinate-of-selection-line-crossing-a-roi/6923/6
 function extrema(p) {
 	for (i = 1; i < p.length; i++) {
-		p[i-1] = abs(p[i]-p[i-1]);
+		p[i-1] = abs(p[i] - p[i-1]);
             }
 }
 function intersection(xx, yy, s, p) {
@@ -206,12 +293,12 @@ function intersection(xx, yy, s, p) {
 		} else { 
 			sign = 1; 
 		}
-		dx = sign*sqrt(pow(p[i], 2)/(1+pow(s, 2)));
+		dx = sign * sqrt(pow(p[i], 2) / (1 + pow(s, 2)));
 		xx[i] += dx;
 		if (s != 1/0) { 
-			yy[i] -= s*dx; 
+			yy[i] -= s * dx; 
 		} else { 
-			yy[i] += sign*p[i]; 
+			yy[i] += sign * p[i]; 
 		}
 	}
 }
@@ -224,12 +311,12 @@ function areaXline(a, b) {
 		      + "Straight line selection required!");
 	}
 	getSelectionCoordinates(x, y);
-	slp = -(y[0]-y[1])/(x[0]-x[1]);
-	len = sqrt(pow(x[0]-x[1], 2) + pow(y[0]-y[1], 2));
+	slp = -(y[0] - y[1]) / (x[0] - x[1]);
+	len = sqrt(pow(x[0] - x[1], 2) + pow(y[0] - y[1], 2));
 	profile = getProfile();
 	extrema(profile);
 	profile = Array.findMaxima(profile, 0, 1);
-	profile[1] = len-profile[1];
+	profile[1] = len - profile[1];
 	intersection(x, y, slp, profile);
 	point1 = newArray(x[0], y[0]);
 	point2 = newArray(x[1], y[1]);
@@ -246,7 +333,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#continued-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#continued-analysis";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -329,7 +416,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#new-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#new-analysis";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");
@@ -348,10 +435,10 @@ function setupMultiAnalysis(analysis) {
 	getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
 	sep = "_";
 	month = month+1;
-	if (month<10) {
+	if (month < 10) {
 		month = "0" + month;
 	}
-	if (dayOfMonth<10) {
+	if (dayOfMonth < 10) {
 		dayOfMonth = "0" + dayOfMonth;
 		date = dayOfMonth + sep + month + sep + year;
 	} else {
@@ -490,7 +577,7 @@ function harvestMetadata(path) {
 	}
 	
 	// If we pass the above, harvest the last analysed image
-	lastImg = lines[lines.length-1];
+	lastImg = lines[lines.length - 1];
 	
 	// Check that this does not correspond to any of the metadata
 	if (lastImg.startsWith("Input_directory: ") || lastImg.startsWith("Output_ROIs: ") || lastImg.startsWith("Output_results: ") || lastImg.startsWith("File_name: ") || lastImg.startsWith("File_extension: ") || lastImg.startsWith("Analysis: ") || lastImg.startsWith("Date: ")) {
@@ -549,7 +636,7 @@ function mainAnalysis() {
 	run("Colors...", "foreground=black background=white selection=red");
 	
 	// Set scale
-	setScale();
+	getScale();
 	
 	// Adjust the image if the fish is bended or not horizontal	
 	straightenRotate();
@@ -565,11 +652,12 @@ function mainAnalysis() {
 	
 	// Fish outline
 	setTool("Polygon");
-	waitForUser("Fish outline", "Trace a polygon following the contour of the \nbody excluding dorsal, pelvic, and anal fins.");
+	message = "Trace a polygon following the contour of the \nbody excluding dorsal, pelvic, and anal fins.";
+	waitForUser("Fish outline", message);
 	if (selectionType != 2) {
 		showMessage("<html>"
 			     + "Polygon selection required!");
-		waitForUser("Fish outline", "Trace a polygon following the contour of the \nbody excluding dorsal, pelvic, and anal fins.");
+		waitForUser("Fish outline", message);
 	}
 	
 	run("Interpolate", "interval=1 smooth adjust");
@@ -588,7 +676,7 @@ function mainAnalysis() {
 	
 	// Intersection points along A
 	Aroi = RoiManager.size - 1;
-	APoints = areaXline(Aroi-1, Aroi);
+	APoints = areaXline(Aroi - 1, Aroi);
 	
 	// Bs - Body area
 	// CFs - caudal fin area
@@ -596,28 +684,28 @@ function mainAnalysis() {
 	if (side == "left") {
 		makeRectangle(0, 0, xA[0], h);
 		roiManager("Add");
-		roiManager("Select", newArray(Aroi-1, Aroi+1));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 1));
 		roiManager("AND");
 		roiAddRename("Bs");
 		makeRectangle(xA[0], 0, w, h);
 		roiManager("Add");
-		roiManager("Select", newArray(Aroi-1, Aroi+3));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 3));
 		roiManager("AND");
 		roiAddRename("CFs");
-		roiManager("Select", newArray(Aroi-1, Aroi+1, Aroi+3));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 1, Aroi + 3));
 		roiManager("Delete");
 	} else {
 		makeRectangle(xA[0], 0, w, h);
 		roiManager("Add");
-		roiManager("Select", newArray(Aroi-1, Aroi+1));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 1));
 		roiManager("AND");
 		roiAddRename("Bs");
 		makeRectangle(0, 0, xA[0], h);
 		roiManager("Add");
-		roiManager("Select", newArray(Aroi-1, Aroi+3));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 3));
 		roiManager("AND");
 		roiAddRename("CFs");
-		roiManager("Select", newArray(Aroi-1, Aroi+1, Aroi+3));
+		roiManager("Select", newArray(Aroi - 1, Aroi + 1, Aroi + 3));
 		roiManager("Delete");
 	}		
 	
@@ -627,12 +715,12 @@ function mainAnalysis() {
 	Bs = getValue("Area");
 	
 	// Bounding box of body area
-	yB = getValue("BY")/pw;
-	yC = yB + (getValue("Height")/pw);
+	yB = getValue("BY");
+	yC = yB + getValue("Height");
 	if (side == "left") {
-		xD = getValue("BX")/pw;
+		xD = getValue("BX");
 	} else {
-		xD = (getValue("BX")/pw) + (getValue("Width")/pw);
+		xD = getValue("BX") + getValue("Width");
 	}
 	// Line B - highest edge of the body (excluding fins)
 	makeLine(0, yB, w, yB);
@@ -645,17 +733,17 @@ function mainAnalysis() {
 	roiAddRename("D");
 	
 	// CFs
-	roiManager("Select", bodyroi+1);
+	roiManager("Select", bodyroi + 1);
 	CFs = getValue("Area");
 	
 	// Bounding box of caudal fin
 	if (side == "left") {
-		xE = (getValue("BX")/pw) + (getValue("Width")/pw);
+		xE = getValue("BX") + getValue("Width");
 	} else {
-		xE = getValue("BX")/pw;
+		xE = getValue("BX");
 	}
-	yF = getValue("BY")/pw;
-	yG = yF + (getValue("Height")/pw);
+	yF = getValue("BY");
+	yG = yF + getValue("Height");
 	// Line E - tip of caudal fin
 	makeLine(xE, 0, xE, h);
 	roiAddRename("E");
@@ -694,23 +782,24 @@ function mainAnalysis() {
 	
 	// Lines J and K - perpendicular lines crossing in the eye centroid
 	setTool("Ellipse");
-	waitForUser("Reference lines", "Reference line J and K: \n \nTrace an ellipse around the eye.\nTwo perpendicular lines intersecting\nin the eye centroid will be drawn.");
+	message = "Reference line J and K: \n \nTrace an ellipse around the eye.\nTwo perpendicular lines intersecting\nin the eye centroid will be drawn.";
+	waitForUser("Reference lines", message);
 	if (selectionType != 3) {
 		showMessage("<html>"
 			     + "Elliptical selection required!");
-		waitForUser("Reference lines", "Reference line J and K: \n \nTrace an ellipse around the eye.\nTwo perpendicular lines intersecting\nin the eye centroid will be drawn.");
+		waitForUser("Reference lines", message);
 	}
 	
 	setBatchMode(true);
 	
 	roiManager("Add");
-	xEC = getValue("X")/pw;
-	yEC = getValue("Y")/pw;
+	xEC = getValue("X");
+	yEC = getValue("Y");
 	// Line J and get intersection point at the anterior margin of the orbit
 	makeLine(0, yEC, w, yEC);
 	roiAddRename("J");
 	Jroi = RoiManager.size - 1;
-	eyePoints = areaXline(Jroi-1, Jroi);
+	eyePoints = areaXline(Jroi - 1, Jroi);
 	if (side == "left") { // Aeye is the intersection point between line J and the anterior margin of the orbit
 		if (eyePoints[0] < eyePoints[2]) {
 			xAeye = eyePoints[0];
@@ -725,7 +814,7 @@ function mainAnalysis() {
 		}
 	}
 	// Delete ellipse
-	roiManager("Select", Jroi-1);
+	roiManager("Select", Jroi - 1);
 	roiManager("Delete");
 	// Line K
 	makeLine(xEC, 0, xEC, h);
@@ -737,11 +826,12 @@ function mainAnalysis() {
 	// Line L - pectoral fin insertion
 	run("Point Tool...", "type=Dot color=Red size=[Extra Large]");
 	setTool("point");
-	waitForUser("Reference lines", "Reference line L: \n \nClick on the pectoral fin insertion point. After the point appears,\nyou can click and drag it if you need to readjust.");
+	message = "Reference line L: \n \nClick on the pectoral fin insertion point. After the point appears,\nyou can click and drag it if you need to readjust.";
+	waitForUser("Reference lines", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Reference lines", "Reference line L: \n \nClick on the pectoral fin insertion point. After the point appears,\nyou can click and drag it if you need to readjust.");
+		waitForUser("Reference lines", message);
 	}
 	getSelectionCoordinates(x, y);
 	xPF = x;
@@ -788,8 +878,17 @@ function mainAnalysis() {
 	roiAddRename("SL");
 	SL = getValue("Length");
 	
+	// pxcm if known fish length
+	if (length != "NA") {
+		if (lengthType == "standard") {
+			pxcm = SL / length;
+		} else if (lengthType == "total") {
+			pxcm = TL / length;
+		}
+	}
+
 	// MBd - Maximum body depth
-	xMBd = xI[0] + ((xA[0] - xI[0])/2);
+	xMBd = xI[0] + ((xA[0] - xI[0]) / 2);
 	makeLine(xMBd, yB, xMBd, yC);
 	roiAddRename("MBd");
 	MBd = getValue("Length");
@@ -853,11 +952,12 @@ function mainAnalysis() {
 	
 	// PFs - Pectoral fin surface area
 	setTool("polygon");
-	waitForUser("Pectoral fin surface area", "Trace a polygon following the contour of the pectoral fin.");
+	message = "Trace a polygon following the contour of the pectoral fin.";
+	waitForUser("Pectoral fin surface area", message);
 	if (selectionType != 2) {
 		showMessage("<html>"
 			     + "Polygon selection required!");
-		waitForUser("Pectoral fin surface area", "Trace a polygon following the contour of the pectoral fin.");
+		waitForUser("Pectoral fin surface area", message);
 	}
 	run("Interpolate", "interval=1 smooth adjust");
 	run("Fit Spline");
@@ -867,22 +967,24 @@ function mainAnalysis() {
 	
 	// PFl - Pectoral fin length
 	setTool("line");
-	waitForUser("Pectoral fin length", "Trace a line on the longest ray of the pectoral fin.");
+	message = "Trace a line on the longest ray of the pectoral fin.";
+	waitForUser("Pectoral fin length", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 			     + "Straight line selection required!");
-		waitForUser("Pectoral fin length", "Trace a line on the longest ray of the pectoral fin.");
+		waitForUser("Pectoral fin length", message);
 	}
 	roiAddRename("PFl");
 	PFl = getValue("Length");
 	
 	// Mo - Oral gape position
 	setTool("Point");
-	waitForUser("Oral gape position", "Click on the tip of the premaxilla (upper jaw).\nAfter the point appears, you can click and\ndrag it if you need to readjust.");
+	message = "Click on the tip of the premaxilla (upper jaw).\nAfter the point appears, you can click and\ndrag it if you need to readjust.";
+	waitForUser("Oral gape position", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Oral gape position", "Click on the tip of the premaxilla (upper jaw).\nAfter the point appears, you can click and\ndrag it if you need to readjust.");
+		waitForUser("Oral gape position", message);
 	}
 	getSelectionCoordinates(x, y);
 	xUJ = x;
@@ -892,11 +994,12 @@ function mainAnalysis() {
 	Mo = getValue("Length");
 	
 	// Jl - Maxillary jaw length
-	waitForUser("Maxillary jaw length", "Click on the intersection between the maxilla\nand the mandible (i.e. the corner of the mouth).\nAfter the point appears, you can click and\ndrag it if you need to readjust.");
+	message = "Click on the intersection between the maxilla\nand the mandible (i.e. the corner of the mouth).\nAfter the point appears, you can click and\ndrag it if you need to readjust.";
+	waitForUser("Maxillary jaw length", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Maxillary jaw length", "Click on the intersection between the maxilla\nand the mandible (i.e. the corner of the mouth).\nAfter the point appears, you can click and\ndrag it if you need to readjust.");
+		waitForUser("Maxillary jaw length", message);
 	}
 	getSelectionCoordinates(x, y);
 	xJC = x;
@@ -918,7 +1021,7 @@ function mainAnalysis() {
 	EMa = getValue("Angle");
 	
 	t1 = getTime;
-	time = (t1-t0)/1000;
+	time = (t1 - t0) / 1000;
 	
 	setBatchMode(false);
 }
@@ -965,11 +1068,12 @@ function headAnalysis() {
 	
 	// Point P1
 	setTool("Point");
-	waitForUser("Reference Point", "Reference point P1: \n \nClick on the tip of the premaxilla (upper jaw). \nAfter the point appears, you can click and \ndrag it if you need to readjust.");
+	message = "Reference point P1: \n \nClick on the tip of the premaxilla (upper jaw). \nAfter the point appears, you can click and \ndrag it if you need to readjust.";
+	waitForUser("Reference Point", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Reference Point", "Reference point P1: \n \nClick on the tip of the premaxilla (upper jaw). \nAfter the point appears, you can click and \ndrag it if you need to readjust.");
+		waitForUser("Reference Point", message);
 	}
 	getSelectionCoordinates(x, y);
 	xP1 = x;
@@ -979,11 +1083,12 @@ function headAnalysis() {
 
 	// Lines
 	setTool("Ellipse");
-	waitForUser("Reference lines", "Trace an ellipse around the eye.");
+	message = "Trace an ellipse around the eye.";
+	waitForUser("Reference lines", message);
 	if (selectionType != 3) {
 		showMessage("<html>"
 			     + "Elliptical selection required!");
-		waitForUser("Reference lines", "Trace an ellipse around the eye.");
+		waitForUser("Reference lines", message);
 	}
 	
 	setBatchMode(true);
@@ -995,7 +1100,7 @@ function headAnalysis() {
 	makeLine(0, yEC, w, yEC);
 	roiAddRename("L1");
 	L1roi = RoiManager.size - 1;
-	eyePointsH = areaXline(L1roi-1, L1roi);
+	eyePointsH = areaXline(L1roi - 1, L1roi);
 	if (side == "left") { // Aeye is the intersection point between line L1 and the anterior margin of the orbit
 		if (eyePointsH[0] < eyePointsH[2]) {
 			xAeye = eyePointsH[0];
@@ -1013,7 +1118,7 @@ function headAnalysis() {
 	makeLine(xEC, 0, xEC, h);
 	roiAddRename("L2");
 	L2roi = RoiManager.size - 1;
-	eyePointsV = areaXline(L1roi-1, L2roi);
+	eyePointsV = areaXline(L1roi - 1, L2roi);
 	if (eyePointsV[1] < eyePointsV[3]) {// Ueye is the intersection point between line L2 and the upper margin of the orbit
 		yUeye = eyePointsV[1];
 	} else {
@@ -1026,13 +1131,13 @@ function headAnalysis() {
 	makeLine(0, yUeye, w, yUeye);
 	roiAddRename("L4");
 	// Get intersection point between L3 and L4
-	point34 = lineXline(L2roi+1,L2roi+2);
+	point34 = lineXline(L2roi + 1, L2roi + 2);
 	makePoint(point34[0], point34[1]);
 	// Delete ellipse	
-	roiManager("Select", L1roi-1);
+	roiManager("Select", L1roi - 1);
 	roiManager("Delete");
 	// Line 5
-	xL5 = xP1[0]+((xAeye-xP1[0])/2);
+	xL5 = xP1[0] + ((xAeye - xP1[0]) / 2);
 	makeLine(xL5, 0, xL5, h);
 	roiAddRename("L5");
 		
@@ -1043,11 +1148,12 @@ function headAnalysis() {
 	
 	// Ha - Head angle
 	setTool("point");
-	waitForUser("Head angle", "Click on the intersection of line L5 with the dorsal margin of the snout.\nYou can click and drag the point if you need to readjust.");
+	message = "Click on the intersection of line L5 with the dorsal margin of the snout.\nYou can click and drag the point if you need to readjust.";
+	waitForUser("Head angle", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Head angle", "Click on the intersection of line L5 with the dorsal margin of the snout.\nYou can click and drag the point if you need to readjust.");
+		waitForUser("Head angle", message);
 	}
 	getSelectionCoordinates(x, y);
 	xL5up = x;
@@ -1060,15 +1166,16 @@ function headAnalysis() {
 	angle1 = measureAngle(xP1[0], yP1[0], point34[0], point34[1]);
 	angle2 = measureAngle(xL5up[0], yL5up[0], point34[0], point34[1]);
 	if (angle2 > angle1){
-		Ha = 360-Ha;
+		Ha = 360 - Ha;
 	}
 	
 	// Sa - Snout angle
-	waitForUser("Snout angle", "Click on the intersection of line L5 with the ventral margin of the snout.\nYou can click and drag the point if you need to readjust.");
+	message = "Click on the intersection of line L5 with the ventral margin of the snout.\nYou can click and drag the point if you need to readjust.";
+	waitForUser("Snout angle", message);
 	if (selectionType != 10) {
 		showMessage("<html>"
 			     + "Point selection required!");
-		waitForUser("Snout angle", "Click on the intersection of line L5 with the ventral margin of the snout.\nYou can click and drag the point if you need to readjust.");
+		waitForUser("Snout angle", message);
 	}
 	getSelectionCoordinates(x, y);
 	xL5low = x;
@@ -1083,7 +1190,7 @@ function headAnalysis() {
 	EMa = getValue("Angle");
 	
 	t1 = getTime;
-	time = (t1-t0)/1000;
+	time = (t1 - t0) / 1000;
 }
 
 // "gutAnalysis": Analysis to measure intestinal traits
@@ -1116,11 +1223,12 @@ function gutAnalysis() {
 	
 	// Intestinal length
 	setTool("Polyline");
-	waitForUser("Intestinal length", "Trace a segmented line from the pyloric outlet to the anus\n(or from the oesophagus to the anus in stomachless fishes )\nfollowing the midline of the intestine.");
+	message = "Trace a segmented line from the pyloric outlet to the anus\n(or from the oesophagus to the anus in stomachless fishes)\nfollowing the midline of the intestine.";
+	waitForUser("Intestinal length", message);
 	if (selectionType != 6) {
 		showMessage("<html>"
 		     + "Segmented line selection required!");
-		waitForUser("Intestinal length", "Trace a segmented line from the pyloric outlet to the anus\n(or from the oesophagus to the anus in stomachless fishes )\nfollowing the midline of the intestine.");
+		waitForUser("Intestinal length", message);
 	}
 	run("Interpolate", "interval=1 smooth adjust");
 	run("Fit Spline");
@@ -1133,8 +1241,8 @@ function gutAnalysis() {
 	xp = newArray(11);
 	yp = newArray(11);
 	for (i = 0; i < xp.length; i++) {
-		xp[i] = x[i*x.length/11];
-		yp[i] = y[i*x.length/11];
+		xp[i] = x[i * x.length / 11];
+		yp[i] = y[i * x.length / 11];
 	}
 	xp = Array.slice(xp, 1); // remove first point
 	yp = Array.slice(yp, 1);
@@ -1145,95 +1253,105 @@ function gutAnalysis() {
 	
 	// 10 diameters
 	setTool("Line");
-	waitForUser("Intestinal diameter", "At the level of the 1st point, moving from the \noesophagus to the anus, trace a straight line \nperpendicular to the midline of the intestine \nand joining the two margins.");
+	message = "At the level of the 1st point, moving from the \noesophagus to the anus, trace a straight line \nperpendicular to the midline of the intestine \nand joining the two margins.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "At the level of the 1st point, moving from the \noesophagus to the anus, trace a straight line \nperpendicular to the midline of the intestine \nand joining the two margins.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD1");
 	GD1 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 2nd point.");
+	message = "Now do the same at the 2nd point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 2nd point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD2");
 	GD2 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 3rd point.");
+	message = "Now do the same at the 3rd point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 3rd point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD3");
 	GD3 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 4th point.");
+	message = "Now do the same at the 4th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 4th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD4");
 	GD4 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 5th point.");
+	message = "Now do the same at the 5th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 5th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD5");
 	GD5 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 6th point.");
+	message = "Now do the same at the 6th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 6th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD6");
 	GD6 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 7th point.");
+	message = "Now do the same at the 7th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 7th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD7");
 	GD7 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 8th point.");
+	message = "Now do the same at the 8th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 8th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD8");
 	GD8 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 9th point.");
+	message = "Now do the same at the 9th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 9th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD9");
 	GD9 = getValue("Length");
-	waitForUser("Intestinal diameter", "Now do the same at the 10th point.");
+	message = "Now do the same at the 10th point.";
+	waitForUser("Intestinal diameter", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
 		     + "Straight line selection required!");
-		waitForUser("Intestinal diameter", "Now do the same at the 10th point.");
+		waitForUser("Intestinal diameter", message);
 	}
 	roiAddRename("GD10");
 	GD10 = getValue("Length");
 	
 	// Mean intestinal diameter
-	GD = (GD1+GD2+GD3+GD4+GD5+GD6+GD7+GD8+GD9+GD10)/10;
+	GD = (GD1 + GD2 + GD3 + GD4 + GD5 + GD6 + GD7 + GD8 + GD9 + GD10) / 10;
 	
 	// Intestinal surface area
-	GS = 2*PI*(GD/2)*GL;
+	GS = 2 * PI * (GD / 2) * GL;
 	
 	t1 = getTime;
-	time = (t1-t0)/1000;
+	time = (t1 - t0) / 1000;
 }
 
 //-----------------------------  FUNCTIONS FOR SAVING RESULTS  ----------------------------//
@@ -1241,7 +1359,7 @@ function gutAnalysis() {
 // "setMainTable": Fill in the main analysis results table
 function setMainTable(i) {
 	Table.set("image_id", i, title);
-	Table.set("px.cm", i, 1/pw);
+	Table.set("px.cm", i, pxcm);
 	Table.set("TL", i, TL);
 	Table.set("SL", i, SL);
 	Table.set("MBd", i, MBd);
@@ -1279,7 +1397,7 @@ function setHeadTable(i) {
 // "setGutTable": Fill in the gut analysis results table
 function setGutTable(i) {
 	Table.set("image_id", i, title);
-	Table.set("px.cm", i, 1/pw);
+	Table.set("px.cm", i, 1 / pw);
 	Table.set("GL", i, GL);
 	Table.set("GD", i, GD);
 	Table.set("GS", i, GS);
@@ -1304,11 +1422,11 @@ function saveResults(analysis) {
 		sep = "\t";
 	}
 	if (analysis == "main") {
-		str = title + sep + 1/pw + sep + TL + sep + SL + sep + MBd + sep + Hl + sep + Hd + sep + Ed + sep + Eh + sep + Snl + sep + POC + sep + AO + sep + EMd + sep + EMa + sep + Mo + sep + Jl + sep + Bs + sep + CPd + sep + CFd + sep + CFs + sep + PFs + sep + PFl + sep + PFi + sep + PFb + sep + time;
+		str = title + sep + pxcm + sep + TL + sep + SL + sep + MBd + sep + Hl + sep + Hd + sep + Ed + sep + Eh + sep + Snl + sep + POC + sep + AO + sep + EMd + sep + EMa + sep + Mo + sep + Jl + sep + Bs + sep + CPd + sep + CFd + sep + CFs + sep + PFs + sep + PFl + sep + PFi + sep + PFb + sep + time;
 	} else if (analysis == "head") {
 		str = title + sep + Ha + sep + Sa + sep + EMa + sep + time;
 	} else if (analysis == "gut") {
-		str = title + sep + 1/pw + sep + GL + sep + GD + sep + GS + sep + GD1 + sep + GD2 + sep + GD3 + sep + GD4 + sep + GD5 + sep + GD6 + sep + GD7 + sep + GD8 + sep + GD9 + sep + GD10 + sep + time;
+		str = title + sep + 1 / pw + sep + GL + sep + GD + sep + GS + sep + GD1 + sep + GD2 + sep + GD3 + sep + GD4 + sep + GD5 + sep + GD6 + sep + GD7 + sep + GD8 + sep + GD9 + sep + GD10 + sep + time;
 	}
 	File.append(str, filePath);
 }

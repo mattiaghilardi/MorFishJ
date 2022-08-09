@@ -14,7 +14,7 @@ macros_path = plugin_path + "macros.ijm"
 IJ.run("Install...", "install=[" + macros_path + "]")
 
 ## Create GUI window
-frame = JFrame("MorFishJ " + version)
+frame = JFrame("MorFishJ " + version + ".9000")
 frame.setResizable(False)
 
 ## Panel 1 - Main Traits
