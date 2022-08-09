@@ -1,10 +1,10 @@
 # MorFishJ to do list
 
 ## New features
-1. Change all measurements to pixels instead of centimetres to allow analysis of images without reference scale. Start with a dialog with three options:
-  - no scale available --> set 'px.cm' = 'NA';
-  - reference object --> get the scale as per current analysis but don't set the scale, just save 'px.cm';
-  - known length --> new dialog asking for length type (SL or TL), measure, and unit, then save 'px.cm' once the length has been measured in pixels.
+~~1. Change all measurements to pixels instead of centimetres to allow analysis of images without reference scale. Start with a dialog with three options:~~
+  ~~- no scale available --> set 'px.cm' = 'NA';~~
+  ~~- reference object --> get the scale as per current analysis but don't set the scale, just save 'px.cm';~~
+  ~~- known length --> new dialog asking for length type (SL or TL), measure, and unit, then save 'px.cm' once the length has been measured in pixels.~~
 
 2. Automatically create output folders in the raw images' parent directory
 
