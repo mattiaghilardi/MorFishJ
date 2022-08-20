@@ -51,9 +51,10 @@ function getImageSize() {
 // "getOrientation": Get fish orientation
 var side;
 function getOrientation() {
+	message = "Which side is the fish facing?";
 	Dialog.create("Orientation");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("Which side is the fish facing?");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 25, 5);
 	Dialog.addChoice("", newArray("left", "right"));
 	Dialog.show();
@@ -65,7 +66,7 @@ var pw;
 function setScale() {
 	setTool("Line");
 	run("Line Width...", "line=1");
-	message = "Trace a line on a reference \nobject of known length.";
+	message = "Trace a line on a reference\nobject of known length.";
 	waitForUser("Set scale", message);
 	if (selectionType != 5) {
 		showMessage("<html>"
@@ -73,9 +74,10 @@ function setScale() {
 		waitForUser("Set scale", message);
 	}
 	roiManager("Add");
+	message = "Please enter the known length\nand select the unit of measurement.\nAny unit will be converted to 'cm'.";
 	Dialog.create("Set scale");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("Please enter the known length \nand select the unit of measurement.\nAny unit will be converted to 'cm'.");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 15, 5);
 	Dialog.addNumber("Known length:", 0);
 	Dialog.setInsets(5, 15, 5);
@@ -100,9 +102,10 @@ function setScale() {
 
 // "getScale": Get scale for the image if available
 function getScale() {
+	message = "Please select the appropriate option to add a\nscale to the results, otherwise click OK.";
 	Dialog.create("Image scale");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("If the image has a reference object, or the\n(standard or total) length of the fish is known,\nselect the appropriate option, otherwise click OK.");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 100, 0);
 	Dialog.addCheckbox("Reference object", false);
 	Dialog.setInsets(5, 100, 0);
@@ -137,9 +140,10 @@ function getRefScale() {
 	}
 	roiManager("Add");
 	px = getValue("Length");
+	message = "Please enter the known length\nand select the unit of measurement.";
 	Dialog.create("Reference scale");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("Please enter the known length\nand select the unit of measurement.");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 15, 5);
 	Dialog.addNumber("Known length:", 0);
 	Dialog.setInsets(5, 15, 5);
@@ -162,9 +166,10 @@ function getRefScale() {
 // "getFishLength": Get known fish length (standard or total)
 var length = "NA", lengthType = "NA";
 function getFishLength() {
+	message = "Please enter the known length of the\nfish, select the unit of measurement\nand the type of length measured.";
 	Dialog.create("Known fish length");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("Please enter the known length of the\nfish, select the unit of measurement\nand the type of length measured.");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 40, 5);
 	Dialog.addNumber("Fish length:", 0);
 	Dialog.setInsets(5, 40, 5);
@@ -199,9 +204,10 @@ function rotateImage(x1, y1, x2, y2) {
 // "straightenRotate": Adjust the image if the fish is bended or not horizontal
 var straighten, rotate;
 function straightenRotate() {
+	message = "The fish must be straight and horizontal.\nIf this is not the case check the box with the\nrequired action, otherwise click OK.";
 	Dialog.create("Image adjustment");
 	Dialog.setInsets(0, 0, 0);
-	Dialog.addMessage("The fish must be straight and horizontal.\nIf this is not the case check the box with the\nrequired action, otherwise click OK.");
+	Dialog.addMessage(message);
 	Dialog.setInsets(5, 70, 0);
 	Dialog.addCheckbox("Straighten", false);
 	Dialog.setInsets(5, 70, 0);
@@ -333,7 +339,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#continued-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#continued-analysis";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -416,7 +422,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#new-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#new-analysis";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");
