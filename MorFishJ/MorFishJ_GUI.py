@@ -4,17 +4,17 @@ from javax.swing.border import EtchedBorder
 from ij import IJ
 
 ## MorFishJ version
-version = "v0.1.0"
+version = "v0.1.0.9000"
 
 ## Path to MorFishJ
-plugin_path = IJ.getDir("plugins") + "/MorFishJ " + version + "/"
+plugin_path = IJ.getDir("plugins") + "/MorFishJ/"
 
 ## Install macros
 macros_path = plugin_path + "macros.ijm"
 IJ.run("Install...", "install=[" + macros_path + "]")
 
 ## Create GUI window
-frame = JFrame("MorFishJ " + version + ".9000")
+frame = JFrame("MorFishJ " + version)
 frame.setResizable(False)
 
 ## Panel 1 - Main Traits
