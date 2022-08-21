@@ -1,13 +1,13 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                   MorFishJ v0.1.0.9000                                  //
+//                                     MorFishJ v0.2.0                                     //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
-//                     morphological traits from side-view fish images.                    //
+//                          morphological traits from fish images.                         //
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                     August 9th, 2022                                    //
+//                                    August 21st, 2022                                    //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
@@ -74,6 +74,7 @@ function setScale() {
 		waitForUser("Set scale", message);
 	}
 	roiManager("Add");
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/set_scale.html#gut-traits-scale";
 	message = "Please enter the known length\nand select the unit of measurement.\nAny unit will be converted to 'cm'.";
 	Dialog.create("Set scale");
 	Dialog.setInsets(0, 0, 0);
@@ -82,6 +83,7 @@ function setScale() {
 	Dialog.addNumber("Known length:", 0);
 	Dialog.setInsets(5, 15, 5);
 	Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
+	Dialog.addHelp(help);
 	Dialog.show();
 	num = Dialog.getNumber();
 	unit = Dialog.getChoice();
@@ -102,14 +104,16 @@ function setScale() {
 
 // "getScale": Get scale for the image if available
 function getScale() {
-	message = "Please select the appropriate option to add a\nscale to the results, otherwise click OK.";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/set_scale.html#main-traits-scale";
+	message = "Please select the appropriate option to add\na scale to the image, otherwise click OK.";
 	Dialog.create("Image scale");
 	Dialog.setInsets(0, 0, 0);
 	Dialog.addMessage(message);
-	Dialog.setInsets(5, 100, 0);
+	Dialog.setInsets(5, 50, 0);
 	Dialog.addCheckbox("Reference object", false);
-	Dialog.setInsets(5, 100, 0);
+	Dialog.setInsets(5, 50, 0);
 	Dialog.addCheckbox("Known fish length", false);
+	Dialog.addHelp(help);
 	Dialog.show();
 
 	refObj = Dialog.getCheckbox();
@@ -140,6 +144,7 @@ function getRefScale() {
 	}
 	roiManager("Add");
 	px = getValue("Length");
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/set_scale.html#scale-through-reference-object";
 	message = "Please enter the known length\nand select the unit of measurement.";
 	Dialog.create("Reference scale");
 	Dialog.setInsets(0, 0, 0);
@@ -148,6 +153,7 @@ function getRefScale() {
 	Dialog.addNumber("Known length:", 0);
 	Dialog.setInsets(5, 15, 5);
 	Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
+	Dialog.addHelp(help);
 	Dialog.show();
 	num = Dialog.getNumber();
 	unit = Dialog.getChoice();
@@ -166,6 +172,7 @@ function getRefScale() {
 // "getFishLength": Get known fish length (standard or total)
 var length = "NA", lengthType = "NA";
 function getFishLength() {
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/set_scale.html#scale-through-fish-length";
 	message = "Please enter the known length of the\nfish, select the unit of measurement\nand the type of length measured.";
 	Dialog.create("Known fish length");
 	Dialog.setInsets(0, 0, 0);
@@ -176,6 +183,7 @@ function getFishLength() {
 	Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
 	Dialog.setInsets(5, 40, 5);
 	Dialog.addChoice("Length type:", newArray("standard", "total"));
+	Dialog.addHelp(help);
 	Dialog.show();
 	length = Dialog.getNumber();
 	unit = Dialog.getChoice();
@@ -204,6 +212,7 @@ function rotateImage(x1, y1, x2, y2) {
 // "straightenRotate": Adjust the image if the fish is bended or not horizontal
 var straighten, rotate;
 function straightenRotate() {
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/straighten_rotate.html";
 	message = "The fish must be straight and horizontal.\nIf this is not the case check the box with the\nrequired action, otherwise click OK.";
 	Dialog.create("Image adjustment");
 	Dialog.setInsets(0, 0, 0);
@@ -212,6 +221,7 @@ function straightenRotate() {
 	Dialog.addCheckbox("Straighten", false);
 	Dialog.setInsets(5, 70, 0);
 	Dialog.addCheckbox("Rotate", false);
+	Dialog.addHelp(help);
 	Dialog.show();
 	
 	straighten = Dialog.getCheckbox();
@@ -339,7 +349,7 @@ var inputDir, outputDir1, outputDir2, fileName, fileExt, filePath, lastImg, logF
 function continuedAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#continued-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#continued-analysis";
 	Dialog.create("Load TraitLog file");
 	Dialog.addFile("TraitLog", "");
 	Dialog.addHelp(help);
@@ -422,7 +432,7 @@ function continuedAnalysis(analysis) {
 function setupMultiAnalysis(analysis) {
 
 	// Dialog
-	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.1.0/GUI.html#new-analysis";
+	help = "https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/GUI.html#new-analysis";
 	Dialog.create("Select directories and output file's name and format");
 	Dialog.addDirectory("Input directory", "");
 	Dialog.addDirectory("Output directory ROIs", "");

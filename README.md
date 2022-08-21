@@ -21,14 +21,14 @@ First install ImageJ (instructions [here](https://imagej.nih.gov/ij/download.htm
 
 To install `MorFishJ`:
 
-1. Download the latest release of MorFishJ from [here](https://github.com/mattiaghilardi/MorFishJ/releases) as a `ZIP` file.
+1. Download the latest release of `MorFishJ` from [here](https://github.com/mattiaghilardi/MorFishJ/releases) as a `ZIP` file.
 2. Extract the content.
 3. Copy the folder named `MorFishJ` in the `ImageJ/plugins/` or `Fiji.app/plugins/` directory.
 
 Now `MorFishJ` is installed. Open ImageJ/FIJI and click **Plugins --> MorFishJ --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.1.0.png" width="60%" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.2.0.png" width="60%" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
@@ -54,7 +54,7 @@ Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LI
 To cite `MorFishJ` in publications use:
 
 ```
-Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.6969274
+Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.6969274
 ```
 
 A BibTeX entry for LaTeX users is:
@@ -67,7 +67,7 @@ A BibTeX entry for LaTeX users is:
   month        = aug,
   year         = 2022,
   publisher    = {Zenodo},
-  version      = {v0.1.0},
+  version      = {v0.2.0},
   doi          = {10.5281/zenodo.6969274},
   url          = {https://doi.org/10.5281/zenodo.6969274}
 }

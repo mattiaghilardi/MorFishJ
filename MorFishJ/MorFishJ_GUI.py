@@ -4,7 +4,7 @@ from javax.swing.border import EtchedBorder
 from ij import IJ
 
 ## MorFishJ version
-version = "v0.1.0.9000"
+version = "v0.2.0"
 
 ## Path to MorFishJ
 plugin_path = IJ.getDir("plugins") + "/MorFishJ/"
