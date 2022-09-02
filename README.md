@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/github/license/mattiaghilardi/MorFishJ)](https://choosealicense.com/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6969274.svg)](https://doi.org/10.5281/zenodo.6969274)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6969273.svg)](https://doi.org/10.5281/zenodo.6969273)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/mattiaghilardi/MorFishJ)
 
@@ -54,7 +54,7 @@ Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LI
 To cite `MorFishJ` in publications use:
 
 ```
-Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.6969274
+Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.6969273
 ```
 
 A BibTeX entry for LaTeX users is:
@@ -64,12 +64,11 @@ A BibTeX entry for LaTeX users is:
   author       = {Mattia Ghilardi},
   title        = {{MorFishJ: A software package for fish traditional 
                    morphometrics}},
-  month        = aug,
   year         = 2022,
   publisher    = {Zenodo},
   version      = {v0.2.0},
-  doi          = {10.5281/zenodo.6969274},
-  url          = {https://doi.org/10.5281/zenodo.6969274}
+  doi          = {10.5281/zenodo.6969273},
+  url          = {https://doi.org/10.5281/zenodo.6969273}
 }
 ```
 
