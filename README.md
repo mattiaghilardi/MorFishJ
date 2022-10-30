@@ -17,7 +17,7 @@
 
 First install ImageJ (instructions [here](https://imagej.nih.gov/ij/download.html)) or Fiji (instructions [here](https://imagej.net/software/fiji/downloads)).
 
-`MorFishJ` depends on `ImageJ 1.53e`, thus, if ImageJ/Fiji was previously installed, first check the current ImageJ version below the toolbar. If it is older than 1.53e, to update ImageJ click **Help --> Update ImageJ...**, choose the latest version and click OK. Then ImageJ/Fiji must be restarted.
+`MorFishJ` depends on `ImageJ 1.53s`, thus, if ImageJ/Fiji was previously installed, first check the current ImageJ version below the toolbar. If it is older than 1.53s, to update ImageJ click **Help --> Update ImageJ...**, choose the latest version and click OK. Then ImageJ/Fiji must be restarted.
 
 To install `MorFishJ`:
 
@@ -28,7 +28,7 @@ To install `MorFishJ`:
 Now `MorFishJ` is installed. Open ImageJ/FIJI and click **Plugins --> MorFishJ --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.2.0.png" width="60%" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.2.1.png" width="60%" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
