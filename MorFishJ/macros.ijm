@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                     MorFishJ v0.2.0                                     //
+//                                     MorFishJ v0.2.1                                     //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
 //                          morphological traits from fish images.                         //
@@ -12,7 +12,7 @@
 //-----------------------------------------------------------------------------------------//
 
 // MorFishJ and ImageJ versions
-var MorFishJ_version = "v0.2.0", ImageJ_version = "1.53s";
+var MorFishJ_version = "v0.2.1", ImageJ_version = "1.53s";
 
 // Check ImageJ version
 var v = versionCheck();
