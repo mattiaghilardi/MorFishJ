@@ -54,7 +54,7 @@ Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LI
 To cite `MorFishJ` in publications use:
 
 ```
-Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.0). Zenodo. https://doi.org/10.5281/zenodo.6969273
+Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.1). Zenodo. https://doi.org/10.5281/zenodo.6969273
 ```
 
 A BibTeX entry for LaTeX users is:
@@ -66,7 +66,7 @@ A BibTeX entry for LaTeX users is:
                    morphometrics}},
   year         = 2022,
   publisher    = {Zenodo},
-  version      = {v0.2.0},
+  version      = {v0.2.1},
   doi          = {10.5281/zenodo.6969273},
   url          = {https://doi.org/10.5281/zenodo.6969273}
 }

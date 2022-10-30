@@ -1,3 +1,9 @@
+# MorFishJ v0.2.1
+
+- Improved messages within dialogs.
+- Improved code with more recent built-in ImageJ macro functions.
+- MorFishJ now depends on ImageJ 1.53s. 
+
 # MorFishJ v0.2.0
 
 - The reference scale for the `Main Traits` analysis is now optional and any image, with and without scale, can be analysed. There are three options:
