@@ -914,7 +914,7 @@ function mainAnalysis() {
 	setTool("point");
 	message = "Reference line L: \n" +
 			  " \n" +
-			  "Click on the pectoral fin insertion point." +
+			  "Click on the pectoral fin insertion point.\n" +
 			  "After the point appears, you can click and drag\n" +
 			  "it if you need to readjust its position.";
 	waitForUser("Reference lines", message);
