@@ -3,7 +3,7 @@
 - Improved messages within dialogs.
 - Improved code with more recent built-in ImageJ macro functions.
 - MorFishJ now depends on ImageJ 1.53s. 
-- Now the outlines of the body and eye in the `Main Traits` and `Gut Traits` analyses are saved together with the other ROIs.
+- Now the outlines of the body and eye in the `Main Traits` and `Head Angles` analyses are saved together with the other ROIs.
 
 # MorFishJ v0.2.0
 
