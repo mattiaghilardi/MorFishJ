@@ -5,6 +5,8 @@
 - Fix the potential incorrect measurement of the `Anterior of the Orbit` (AO) in fish with very anterior eyes, or positioned on top of head (e.g. *Periophtalmus* spp. and many other blennies). Now, if the anterior edge of the orbit lies outside the body outline, AO = 0 and the corresponding ROI is not saved.
 - Ensure that existing ROIs are rotated together with the image.
 
+The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.2/).
+
 # MorFishJ v0.2.1
 
 ## Other Changes
