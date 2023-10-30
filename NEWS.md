@@ -1,11 +1,24 @@
+# MorFishJ v0.2.2
+
+## Bug Fixes
+
+- Fix the potential incorrect measurement of the `Anterior of the Orbit` (AO) in fish with very anterior eyes, or positioned on top of head (e.g. *Periophtalmus* spp. and many other blennies). Now, if the anterior edge of the orbit lies outside the body outline, AO = 0 and the corresponding ROI is not saved.
+- Ensure that existing ROIs are rotated together with the image.
+
 # MorFishJ v0.2.1
+
+## Other Changes
 
 - Improved messages within dialogs.
 - Improved code with more recent built-in ImageJ macro functions.
 - MorFishJ now depends on ImageJ 1.53s. 
 - Now the outlines of the body and eye in the `Main Traits` and `Head Angles` analyses are saved together with the other ROIs.
 
+The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.1/).
+
 # MorFishJ v0.2.0
+
+## New Features
 
 - The reference scale for the `Main Traits` analysis is now optional and any image, with and without scale, can be analysed. There are three options:
   - Add a scale through a reference object in the image -> the scale (pixels / cm) will be saved in the column `px.cm` of the results file as in the previous version;
@@ -13,6 +26,9 @@
   - Do not add a scale to the image -> the column `px.cm` will display `NA`.
 
 - The results of the `Main Traits` analysis are now saved in `pixels` instead of `cm`. If preferred, the column `px.cm` allows to convert them to `cm` when a scale is provided. 
+
+## Other Changes
+
 - Removed version number from the plugin folder.
 
 The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.0/).

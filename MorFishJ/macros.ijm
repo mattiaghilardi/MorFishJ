@@ -1,18 +1,18 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                     MorFishJ v0.2.1                                     //
+//                                    MorFishJ v0.2.2                                      //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
 //                          morphological traits from fish images.                         //
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                   October 30th, 2022                                    //
+//                                   October 30th, 2023                                    //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
 // MorFishJ and ImageJ versions
-var MorFishJ_version = "v0.2.1", ImageJ_version = "1.53s";
+var MorFishJ_version = "v0.2.2", ImageJ_version = "1.53s";
 
 // Check ImageJ version
 var v = versionCheck();
@@ -40,6 +40,22 @@ function checkImage(type) { // type: single (s) or multiple (m) analysis
 		exit("<html>"
 		     + "Multiple images are open");
 	}
+}
+
+// "duplicateImage": Duplicate image and get name with and without extension
+var titleWithExt = "", title = "", copy = "";
+function duplicateImage() {
+	// Get image ID and name
+	original = getImageID;
+	titleWithExt = getTitle();
+	title = File.nameWithoutExtension;
+	
+	// Duplicate image, rename, and close original
+	run("Duplicate...", " ");
+	copy = getImageID;
+	rename(title);
+	selectImage(original);
+	run("Close");
 }
 
 // "getImageSize": Get image's width and height and the center's coordinates
@@ -208,6 +224,7 @@ function getFishLength() {
 }
 
 // "measureAngle": Measure angle in degrees between a line and the horizontal axis.
+// This function differ from the built in function as it is not sensitive to the direction in which the line is drawn (left to right or right to left).
 function measureAngle(x1, y1, x2, y2) {
 	dx = x2 - x1;
 	dy = y1 - y2;
@@ -215,14 +232,16 @@ function measureAngle(x1, y1, x2, y2) {
 	return angle;
 }
 
-// "rotateImage": Rotate an image based on the angle of a straight line selection.
-function rotateImage(x1, y1, x2, y2) {
-	angle = measureAngle(x1, y1, x2, y2);
-	run("Rotate...", "angle=" + angle + " interpolation=Bilinear fill");
-}
+//// "rotateImage": Rotate an image based on the angle of a straight line selection.
+//function rotateImage(x1, y1, x2, y2) {
+//	angle = measureAngle(x1, y1, x2, y2);
+//	run("Rotate... ", "angle=" + angle + " interpolation=Bilinear fill");
+//	return angle;
+//}
 
 // "straightenRotate": Adjust the image if the fish is bended or not horizontal
 var straighten = 0, rotate = 0;
+//var rotationAngle = 0; // to report the angle of rotation
 function straightenRotate() {
 	help = "https://mattiaghilardi.github.io/MorFishJ_manual/" + MorFishJ_version + "/straighten_rotate.html";
 	message = "The fish must be straight and horizontal.\n" +
@@ -254,7 +273,7 @@ function straightenRotate() {
 		waitForUser("Straighten fish", message);
 		if (selectionType != 6) {
 			showMessage("<html>"
-						+ "Segmented line selection required!");
+				     + "Segmented line selection required!");
 			waitForUser("Straighten fish", message);
 		}
 		run("Straighten...");
@@ -275,11 +294,26 @@ function straightenRotate() {
 		waitForUser("Rotate image", message);
 		if (selectionType != 5) {
 			showMessage("<html>"
-						+ "Straight line selection required!");
+				     + "Straight line selection required!");
 			waitForUser("Rotate image", message);
 		}
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// ALTERNATIVE: insted of tracing a line open the rotate dialog and then extract angle once finished?
+// 	run("Rotate... ");
+// 	rotationAngle = getValue("rotation.angle");
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		getLine(x1, y1, x2, y2, lineWidth);
-		rotateImage(x1, y1, x2, y2);
+		rotationAngle = measureAngle(x1, y1, x2, y2);
+		nROI = RoiManager.size;
+		allROIs = newArray(nROI);
+		for (i = 0; i < allROIs.length; i++){
+			allROIs[i] = i;
+		}
+		roiManager("Select", allROIs);
+		RoiManager.rotate(rotationAngle, getWidth / 2, getHeight / 2);
+		run("Rotate... ", "angle=" + rotationAngle + " interpolation=Bilinear fill"); // possibility to add enlarge to avoid cropping but existing ROIs would be translated
 	}
 }
 
@@ -669,25 +703,6 @@ function mainAnalysis() {
 	
 	t0 = getTime;
 	
-	// Get image ID and name
-	original = getImageID;
-	titleWithExt = getTitle();
-	title = File.nameWithoutExtension;
-	
-	// Duplicate image, rename, and close original
-	run("Duplicate...", " ");
-	copy = getImageID;
-	rename(title);
-	selectImage(original);
-	run("Close");
-	
-	// Open ROI manager
-	run("ROI Manager...");
-	roiManager("Show All with labels");
-	
-	// Set colors
-	run("Colors...", "foreground=black background=white selection=red");
-	
 	// Set scale
 	getScale();
 	
@@ -1004,10 +1019,16 @@ function mainAnalysis() {
 	POC = getValue("Length");
 	
 	// AO - Anterior of orbit
-	makeLine(xAeye, yEC, xAO, yEC);
-	roiAddRename("AO");
-	AO = getValue("Length");
-	
+	// Exception for fish with very anterior eyes, or positioned on top of head (e.g. Periophtalmus spp. and many other blennies)
+	// Set AO = 0 if the anterior of the eye is outside the body outline
+	if ((side == "left" && xAeye < xAO) || (side == "right" && xAeye > xAO)) {
+		AO = 0;
+	} else {
+		makeLine(xAeye, yEC, xAO, yEC);
+		roiAddRename("AO");
+		AO = getValue("Length");
+	}
+
 	// Snl - Snout length
 	makeLine(xD, yB, xAeye, yB);
 	roiAddRename("Snl");
@@ -1126,25 +1147,6 @@ var Sa = "", Ha = "", EMa = "";
 function headAnalysis() {
 	
 	t0 = getTime;
-	
-	// Get image ID and name
-	original = getImageID;
-	titleWithExt = getTitle();
-	title = File.nameWithoutExtension;
-	
-	// Duplicate image, rename, and close original
-	run("Duplicate...", " ");
-	copy = getImageID;
-	rename(title);
-	selectImage(original);
-	run("Close");
-	
-	// Open ROI manager
-	run("ROI Manager...");
-	roiManager("Show All with labels");
-	
-	// Set colors
-	run("Colors...", "foreground=black background=white selection=red");
 	
 	// Adjust the image if the fish is bended or not horizontal
 	straightenRotate();
@@ -1300,25 +1302,6 @@ var GD1 = "", GD2 = "", GD3 = "", GD4 = "", GD5 = "", GD6 = "", GD7 = "", GD8 = 
 function gutAnalysis() {
 	
 	t0 = getTime;
-	
-	// Get image ID and name
-	original = getImageID;
-	titleWithExt = getTitle();
-	title = File.nameWithoutExtension;
-		
-	// Duplicate image, rename, and close original
-	run("Duplicate...", " ");
-	copy = getImageID();
-	rename(title);
-	selectImage(original);
-	run("Close");
-	
-	// Open ROI manager
-	run("ROI Manager...");
-	roiManager("Show All with labels");
-	
-	// Set colors
-	run("Colors...", "foreground=black background=white selection=red");
 	
 	// Set scale
 	setScale();
@@ -1556,6 +1539,16 @@ function singleAnalysis(analysis) {
 	// Check image
 	checkImage("s");
 	
+	// Duplicate image
+	duplicateImage();
+	
+	// Open ROI manager
+	run("ROI Manager...");
+	roiManager("Show All with labels");
+	
+	// Set colors
+	run("Colors...", "foreground=black background=white selection=red");
+	
 	// Analysis
 	if (analysis == "main") {
 		mainAnalysis();
@@ -1594,7 +1587,17 @@ function multiAnalysis(analysis, type) {
 		
 		// Open image
 		open(inputDir + newList[i]);
-
+			
+		// Duplicate image
+		duplicateImage();
+		
+		// Open ROI manager
+		run("ROI Manager...");
+		roiManager("Show All with labels");
+		
+		// Set colors
+		run("Colors...", "foreground=black background=white selection=red");
+		
 		// Analysis
 		if (analysis == "main") {
 			mainAnalysis();
