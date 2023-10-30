@@ -28,7 +28,7 @@ To install `MorFishJ`:
 Now `MorFishJ` is installed. Open ImageJ/FIJI and click **Plugins --> MorFishJ --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.2.1.png" width="60%" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.2.2.png" width="60%" title="MorFishJ GUI"><br>
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
@@ -54,7 +54,7 @@ Licensed under the [MIT](https://github.com/mattiaghilardi/MorFishJ/blob/main/LI
 To cite `MorFishJ` in publications use:
 
 ```
-Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics (v0.2.1). Zenodo. https://doi.org/10.5281/zenodo.6969273
+Mattia Ghilardi (2022). MorFishJ: A software package for fish traditional morphometrics. Zenodo. https://doi.org/10.5281/zenodo.6969273
 ```
 
 A BibTeX entry for LaTeX users is:
@@ -66,7 +66,6 @@ A BibTeX entry for LaTeX users is:
                    morphometrics}},
   year         = 2022,
   publisher    = {Zenodo},
-  version      = {v0.2.1},
   doi          = {10.5281/zenodo.6969273},
   url          = {https://doi.org/10.5281/zenodo.6969273}
 }
