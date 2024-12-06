@@ -32,7 +32,13 @@ function skipImage() {
   // 1 - logical indicating whether to skip the image (1) or not (0)
   
   help = "https://mattiaghilardi.github.io/MorFishJ_manual/" + MorFishJ_version + "/image_quality.html";
+  message = "Write any remark to the current image if needed,\n" +
+            "or select 'Skip image' to skip the current image\n" +
+            "and move to the next, then click OK.";
+  Dialog.create("Set scale");
   Dialog.create("Image quality");
+  Dialog.setInsets(0, 0, 0);
+  Dialog.addMessage(message);
   //Dialog.addSlider("Quality", 0, 5, 5); // slider to select level of image quality from 0 to 5
   Dialog.addString("Remarks", "", 30);
   Dialog.addCheckbox("Skip image", false);
@@ -109,11 +115,11 @@ function setScale() {
     setTool("Line");
     run("Line Width...", "line=1");
     message = "Trace a line on a reference\n" +
-           "object of known length.";
+              "object of known length.";
     waitForUser("Set scale", message);
     if (selectionType != 5) {
       showMessage("<html>"
-            + "Straight line selection required!");
+                + "Straight line selection required!");
     }
   } while (selectionType != 5);
   

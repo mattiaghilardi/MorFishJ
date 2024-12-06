@@ -1,3 +1,21 @@
+# MorFishJ v0.2.2.9000
+
+## New Features
+
+- New dialog at the beginning of each image in a multi-image analysis with two options:
+  1. Add a comment to the image that is reported in the results (`remark` column);
+  2. Skip the current image (e.g. if not needed or low quality).
+
+## Bug Fixes
+
+- Fix an error that occurs when user selections are incorrect twice in a row.
+
+## Other Changes
+
+- Improved code indentation for better readability.
+
+<!-- The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.2/). -->
+
 # MorFishJ v0.2.2
 
 ## Bug Fixes
