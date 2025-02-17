@@ -14,7 +14,7 @@
 
 - Improved code indentation for better readability.
 
-<!-- The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.2.2/). -->
+The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.3.0/).
 
 # MorFishJ v0.2.2
 
