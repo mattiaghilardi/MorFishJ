@@ -1,18 +1,18 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                  MorFishJ v0.2.2.9000                                   //
+//                                     MorFishJ v0.3.0                                     //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
 //                          morphological traits from fish images.                         //
 //                                                                                         //
 //                                 Author: Mattia Ghilardi                                 //
 //                               mattia.ghilardi91@gmail.com                               //
-//                                   December 4th, 2024                                    //
+//                                   February 17th, 2025                                   //
 //                                                                                         //
 //-----------------------------------------------------------------------------------------//
 
 // MorFishJ and ImageJ versions
-var MorFishJ_version = "v0.2.2.9000", ImageJ_version = "1.53s";
+var MorFishJ_version = "v0.3.0", ImageJ_version = "1.53s";
 
 // Check ImageJ version
 var v = versionCheck();

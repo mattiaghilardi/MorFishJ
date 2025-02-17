@@ -1,10 +1,10 @@
-# MorFishJ v0.2.2.9000
+# MorFishJ v0.3.0
 
 ## New Features
 
 - New dialog at the beginning of each image in a multi-image analysis with two options:
   1. Add a comment to the image that is reported in the results (`remark` column);
-  2. Skip the current image (e.g. if not needed or low quality).
+  2. Skip the current image (e.g. if not needed or of low quality).
 
 ## Bug Fixes
 
