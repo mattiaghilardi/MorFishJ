@@ -15,7 +15,7 @@
 
 ## Installation
 
-First install ImageJ (instructions [here](https://imagej.nih.gov/ij/download.html)) or Fiji (instructions [here](https://imagej.net/software/fiji/downloads)).
+First install ImageJ (instructions [here](https://imagej.net/ij/download.html)) or Fiji (instructions [here](https://imagej.net/software/fiji/downloads)).
 
 `MorFishJ` depends on `ImageJ 1.53s`, thus, if ImageJ/Fiji was previously installed, first check the current ImageJ version below the toolbar. If it is older than 1.53s, to update ImageJ click **Help --> Update ImageJ...**, choose the latest version and click OK. Then ImageJ/Fiji must be restarted.
 
