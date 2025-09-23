@@ -37,7 +37,7 @@ function skipImage() {
             "and move to the next, then click OK.";
   Dialog.create("Set scale");
   Dialog.create("Image quality");
-  Dialog.setInsets(0, 0, 0);
+  Dialog.setInsets(0, 0, 5);
   Dialog.addMessage(message);
   //Dialog.addSlider("Quality", 0, 5, 5); // slider to select level of image quality from 0 to 5
   Dialog.addString("Remarks", "", 30);
@@ -129,11 +129,11 @@ function setScale() {
             "and select the unit of measurement.\n" +
             "Any unit will be converted to 'cm'.";
   Dialog.create("Set scale");
-  Dialog.setInsets(0, 0, 0);
+  Dialog.setInsets(0, 0, 5);
   Dialog.addMessage(message);
-  Dialog.setInsets(5, 15, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addNumber("Known length:", 0);
-  Dialog.setInsets(5, 15, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
   Dialog.addHelp(help);
   Dialog.show();
@@ -203,11 +203,11 @@ function getRefScale() {
   message = "Please enter the known length\n" +
             "and select the unit of measurement.";
   Dialog.create("Reference scale");
-  Dialog.setInsets(0, 0, 0);
+  Dialog.setInsets(0, 0, 5);
   Dialog.addMessage(message);
-  Dialog.setInsets(5, 15, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addNumber("Known length:", 0);
-  Dialog.setInsets(5, 15, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
   Dialog.addHelp(help);
   Dialog.show();
@@ -233,13 +233,13 @@ function getFishLength() {
             "fish, select the unit of measurement\n" +
             "and the type of length measured.";
   Dialog.create("Known fish length");
-  Dialog.setInsets(0, 0, 0);
+  Dialog.setInsets(0, 0, 5);
   Dialog.addMessage(message);
-  Dialog.setInsets(5, 40, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addNumber("Fish length:", 0);
-  Dialog.setInsets(5, 40, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addChoice("Unit:", newArray("mm", "cm", "inch"));
-  Dialog.setInsets(5, 40, 5);
+  Dialog.setInsets(5, 0, 5);
   Dialog.addChoice("Length type:", newArray("standard", "total"));
   Dialog.addHelp(help);
   Dialog.show();
