@@ -153,31 +153,24 @@ function setScale() {
 var pxcm = "NA";
 function getScale() {
   help = "https://mattiaghilardi.github.io/MorFishJ_manual/" + MorFishJ_version + "/set_scale.html#main-traits-scale";
-  message = "Please select the appropriate option to add\n" +
-            "a scale to the image. If none is available\n" +
-            "click OK and continue without scale.";
   Dialog.create("Image scale");
   Dialog.setInsets(0, 0, 0);
-  Dialog.addMessage(message);
-  Dialog.setInsets(5, 50, 0);
-  Dialog.addCheckbox("Reference object", false);
-  Dialog.setInsets(5, 50, 0);
-  Dialog.addCheckbox("Known fish length", false);
+  label = "Please select the appropriate option\n" +
+            "to add a scale to the image.";
+  items = newArray("Reference object", "Known fish length", "No scale available");
+  Dialog.addRadioButtonGroup(label, items, 3, 1, "No scale available");
   Dialog.addHelp(help);
   Dialog.show();
 
-  refObj = Dialog.getCheckbox();
-  fishLength = Dialog.getCheckbox();
+  option = Dialog.getRadioButton();
   
-  if (refObj == 1) {
+  if (option == "Reference object") {
     getRefScale();
   } 
-  else if (refObj == 0 && fishLength == 1) {
+  else if (option == "Known fish length") {
     getFishLength();
   }
-  //else if (refObj == 0 && fishLength == 0) {
-  //	pxcm = "NA";
-  //}
+  // default pxcm = "NA"
 }
 
 // "getRefScale": Get scale from reference object
@@ -1781,5 +1774,4 @@ macro "Gut Traits Multi" {
 macro "Gut Traits Cont" {
   multiAnalysis("gut", "continued");
 }
-
 
