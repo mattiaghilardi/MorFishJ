@@ -261,27 +261,23 @@ function measureAngle(x1, y1, x2, y2) {
 //}
 
 // "straightenRotate": Adjust the image if the fish is bended or not horizontal
-var straighten = 0, rotate = 0;
+var adjustment = "No adjustments";
 //var rotationAngle = 0; // to report the angle of rotation
 function straightenRotate() {
   help = "https://mattiaghilardi.github.io/MorFishJ_manual/" + MorFishJ_version + "/straighten_rotate.html";
-  message = "The fish must be straight and horizontal.\n" +
-            "If this is the case click OK, if not,\n" +
-            "check the box with the required action.";
   Dialog.create("Image adjustment");
   Dialog.setInsets(0, 0, 0);
-  Dialog.addMessage(message);
-  Dialog.setInsets(5, 70, 0);
-  Dialog.addCheckbox("Straighten", false);
-  Dialog.setInsets(5, 70, 0);
-  Dialog.addCheckbox("Rotate", false);
+  label = "The fish must be straight and horizontal.\n" +
+            "Select the required action to make any\n" +
+            "adjustments to the image.";
+  items = newArray("Straighten", "Rotate", adjustment);
+  Dialog.addRadioButtonGroup(label, items, 3, 1, adjustment);
   Dialog.addHelp(help);
   Dialog.show();
   
-  straighten = Dialog.getCheckbox();
-  rotate = Dialog.getCheckbox();
+  option = Dialog.getRadioButton();
   
-  if (straighten == 1) {
+  if (option == "Straighten") {
     do {
       run("Select None");
       setTool("Polyline");
@@ -310,7 +306,7 @@ function straightenRotate() {
       run("Close");
     }
   } 
-  else if (straighten == 0 && rotate == 1) {
+  else if (option == "Rotate") {
     do {
       run("Select None");
       setTool("Line");
@@ -324,7 +320,7 @@ function straightenRotate() {
     } while (selectionType != 5);
     
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-// ALTERNATIVE: insted of tracing a line open the rotate dialog and then extract angle once finished?
+// ALTERNATIVE: instead of tracing a line open the rotate dialog and, once finished, extract the angle?
 // 	run("Rotate... ");
 // 	rotationAngle = getValue("rotation.angle");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -340,6 +336,8 @@ function straightenRotate() {
     RoiManager.rotate(rotationAngle, getWidth / 2, getHeight / 2);
     run("Rotate... ", "angle=" + rotationAngle + " interpolation=Bilinear fill"); // possibility to add enlarge to avoid cropping but existing ROIs would be translated
   }
+
+  return option;
 }
 
 // "roiAddRename": Add selection to ROI Manager with custom name
@@ -732,7 +730,7 @@ function mainAnalysis() {
   getScale();
   
   // Adjust the image if the fish is bended or not horizontal	
-  straightenRotate();
+  adjustment = straightenRotate();
   
   // Image size
   getImageSize();
@@ -1188,7 +1186,7 @@ function headAnalysis() {
   t0 = getTime;
   
   // Adjust the image if the fish is bended or not horizontal
-  straightenRotate();
+  adjustment = straightenRotate();
   
   // Image size
   getImageSize();
@@ -1601,10 +1599,11 @@ function saveResults(analysis) {
 }
 
 // "saveAdjustedImages": save rotated and straightened images as jpg files
-function saveAdjustedImages() {
-  if (straighten == 1) {
+// adjustment - String returned by straightenRotate()
+function saveAdjustedImages(adjustment) {
+  if (adjustment == "Straighten") {
     saveAs("Jpeg", outputDir1 + title + "_straightened");
-  } else if (straighten == 0 && rotate == 1) {
+  } else if (adjustment == "Rotate") {
     saveAs("Jpeg", outputDir1 + title + "_rotated");
   }
 }
@@ -1713,7 +1712,7 @@ function multiAnalysis(analysis, type) {
       run("Close");
       
       // Save image if rotated or straightened
-      saveAdjustedImages();
+      saveAdjustedImages(adjustment);
       
       // Save results
       saveResults(analysis);
