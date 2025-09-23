@@ -95,16 +95,14 @@ function getImageSize() {
 }
 
 // "getOrientation": Get fish orientation
-var side = "left";
 function getOrientation() {
-  message = "Which side is the fish facing?";
   Dialog.create("Orientation");
   Dialog.setInsets(0, 0, 0);
-  Dialog.addMessage(message);
-  Dialog.setInsets(5, 25, 5);
-  Dialog.addChoice("", newArray("left", "right"));
+  label = "Which side is the fish facing?";
+  items = newArray("left", "right");
+  Dialog.addRadioButtonGroup(label, items, 1, 2, "left");
   Dialog.show();
-  side = Dialog.getChoice();
+  return Dialog.getRadioButton();
 }
 
 // "setScale": Set scale
@@ -747,7 +745,7 @@ function mainAnalysis() {
   getImageSize();
   
   // Orientation
-  getOrientation();
+  side = getOrientation();
   
   
   // REFERENCE LINES //
@@ -1203,7 +1201,7 @@ function headAnalysis() {
   getImageSize();
   
   // Orientation
-  getOrientation();
+  side = getOrientation();
   
   
   // REFERENCE LINES AND POINTS //
@@ -1230,7 +1228,6 @@ function headAnalysis() {
   xP1 = x[0];
   yP1 = y[0];
   roiAddRename("P1");
-
 
   // Lines
   do {
