@@ -327,14 +327,19 @@ function straightenRotate() {
 
     getLine(x1, y1, x2, y2, lineWidth);
     rotationAngle = measureAngle(x1, y1, x2, y2);
+    xmid0 = getWidth / 2;
+    ymid0 = getHeight / 2;
     nROI = RoiManager.size;
     allROIs = newArray(nROI);
     for (i = 0; i < allROIs.length; i++){
       allROIs[i] = i;
     }
     roiManager("Select", allROIs);
-    RoiManager.rotate(rotationAngle, getWidth / 2, getHeight / 2);
-    run("Rotate... ", "angle=" + rotationAngle + " interpolation=Bilinear fill"); // possibility to add enlarge to avoid cropping but existing ROIs would be translated
+    RoiManager.rotate(rotationAngle, xmid0, ymid0);
+    run("Rotate... ", "angle=" + rotationAngle + " interpolation=Bilinear fill enlarge"); // enlarge to avoid cropping, requires translating ROIs
+    xmid1 = getWidth / 2;
+    ymid1 = getHeight / 2;
+    RoiManager.translate(xmid1 - xmid0, ymid1 - ymid0);
   }
 
   return option;
