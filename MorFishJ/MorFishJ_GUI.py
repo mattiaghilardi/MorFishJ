@@ -4,7 +4,7 @@ from javax.swing.border import EtchedBorder
 from ij import IJ
 
 ## MorFishJ version
-version = "v0.3.0"
+version = "v0.3.0.9999"
 
 ## Path to MorFishJ
 plugin_path = IJ.getDir("plugins") + "/MorFishJ/"
@@ -41,10 +41,16 @@ panel3.setBorder(
         EtchedBorder.RAISED, Color.GRAY, Color.DARK_GRAY), "Gut Traits"))
 panel3.getBorder().setTitleFont(Font("Dialog", Font.BOLD, 15))
 
-## Define action for each button
+## Panel 4 - merge panels 1-3
+panel4 = JPanel(GridLayout(3, 0))
+
+## Panel 5 - Logo and help button
+panel5 = JPanel(GridBagLayout())
+
+## Define action for each button in panels 1-3
 macro = ""
 
-class TraitTask( SwingWorker ) :
+class TraitTask(SwingWorker) :
     def doInBackground(self) :
         # Class implementing long running task as a SwingWorker thread
         try :
@@ -100,13 +106,14 @@ def GTC(event):
    macro = "Gut Traits Cont"
    TraitTask().execute()
 
-## Icons, labels, and buttons
+## Function to rescale image icons
 def scaledImageIcon(path, w):
    I = ImageIcon(path)
    I = I.getImage()
    sI = I.getScaledInstance(w, -1, I.SCALE_SMOOTH)
    return ImageIcon(sI)
 
+## Icons, labels, and buttons in panels 1-3
 icon1 = scaledImageIcon(plugin_path + "Icons/FishTraitsIcon.png", 60)
 icon2 = scaledImageIcon(plugin_path + "Icons/HeadAnglesIcon.png", 60)
 icon3 = scaledImageIcon(plugin_path + "Icons/GutTraitsIcon.png", 60)
@@ -141,7 +148,54 @@ b8.setFont(Font("Dialog", Font.BOLD, 15))
 b9 = JButton("Continued Analysis", actionPerformed = GTC)
 b9.setFont(Font("Dialog", Font.BOLD, 15))
 
-## Define position of icons and buttons - same for all panels
+## Define action for each button in panel 5
+## Links to GH profile, source code and documentation
+def openBrowser(url):
+   from java.awt import Desktop
+   from java.net import URI
+   d = Desktop.getDesktop()
+   d.browse(URI(url))
+   return True
+
+def GHprofile(event):
+   openBrowser("https://github.com/mattiaghilardi")
+
+def sourcecode(event):
+   openBrowser("https://github.com/mattiaghilardi/MorFishJ")
+
+def usermanual(event):
+   openBrowser("https://mattiaghilardi.github.io/MorFishJ_manual/")
+
+## Logo and buttons in panel 5
+# MorFishJ logo
+iconMorFishJscaled = scaledImageIcon(plugin_path + "Icons/MorFishJ_logo.png", 55)
+i4 = JLabel(iconMorFishJscaled)
+# Button with link to GH profile - hyperlink doesn't work in jlabel
+label5 = "<html>Developed with <font color='#FE0000'>&#9829;</font> by <a href='https://github.com/mattiaghilardi'>Mattia Ghilardi</a></html>"
+# l5 = JLabel(label5)
+# l5.setFont(Font("Dialog", Font.BOLD, 15))
+# l5.setHorizontalAlignment(JLabel.CENTER)
+b10 = JButton(label5, actionPerformed = GHprofile)
+b10.setFont(Font("Dialog", Font.BOLD, 15))
+b10.setToolTipText("GitHub profile")
+b10.setContentAreaFilled(0)
+b10.setBorderPainted(0)
+# GH icon with link to source code
+iconGH = ImageIcon(plugin_path + "Icons/GitHub-Mark-32px.png")
+b11 = JButton(iconGH, actionPerformed = sourcecode)
+b11.setToolTipText("Source Code")
+b11.setContentAreaFilled(0)
+b11.setBorderPainted(0)
+# User manual icon with link to documentation
+iconManual = scaledImageIcon(plugin_path + "Icons/MorFishJ-user-manual.png", 45)
+b12 = JButton(iconManual, actionPerformed = usermanual)
+b12.setToolTipText("User Manual")
+b12.setContentAreaFilled(0)
+b12.setBorderPainted(0)
+
+## Define position of icons and buttons
+# a-e are same for panels 1-3
+# Icon
 a = GridBagConstraints()
 a.gridx = 0   
 a.gridy = 0
@@ -150,6 +204,7 @@ a.weightx = 0.2
 a.insets = Insets(10, 10, 10, 10)
 a.fill = GridBagConstraints.HORIZONTAL
 
+# Label
 b = GridBagConstraints()
 b.gridx = 1   
 b.gridy = 0
@@ -158,29 +213,69 @@ b.weightx = 0.8
 b.insets = Insets(10, 10, 10, 10)
 b.fill = GridBagConstraints.HORIZONTAL
 
+# Button single image
 c = GridBagConstraints()
 c.gridx = 0   
 c.gridy = 1
 c.gridwidth = 1
 c.weightx = 0.5
-c.insets = Insets(10, 10, 10, 10)
+c.insets = Insets(5, 10, 10, 10)
 c.fill = GridBagConstraints.HORIZONTAL
 
+# Button multiple images
 d = GridBagConstraints()
 d.gridx = 1   
 d.gridy = 1
 d.gridwidth = 1
 d.weightx = 0.5
-d.insets = Insets(10, 10, 10, 10)
+d.insets = Insets(5, 10, 10, 10)
 d.fill = GridBagConstraints.HORIZONTAL
 
+# Button continued analysis
 e = GridBagConstraints()
 e.gridx = 2  
 e.gridy = 1
 e.gridwidth = 1
 e.weightx = 0.5
-e.insets = Insets(10, 10, 10, 10)
+e.insets = Insets(5, 10, 10, 10)
 e.fill = GridBagConstraints.HORIZONTAL
+
+# Panel 5
+# Logo
+f = GridBagConstraints()
+f.gridx = 0   
+f.gridy = 0
+f.gridwidth = 1
+f.weightx = 0.1
+f.insets = Insets(5, 15, 5, 0)
+f.fill = GridBagConstraints.HORIZONTAL
+
+# GH profile
+g = GridBagConstraints()
+g.gridx = 1 
+g.gridy = 0
+g.gridwidth = 1
+g.weightx = 1
+g.insets = Insets(0, 0, 0, 0)
+g.fill = GridBagConstraints.HORIZONTAL
+
+# Source code
+h = GridBagConstraints()
+h.gridx = 2   
+h.gridy = 0
+h.gridwidth = 1
+h.weightx = 0
+h.insets = Insets(0, 0, 0, 0)
+h.fill = GridBagConstraints.HORIZONTAL
+
+# User manual
+i = GridBagConstraints()
+i.gridx = 3   
+i.gridy = 0
+i.gridwidth = 1
+i.weightx = 0
+i.insets = Insets(0, 0, 0, 0)
+i.fill = GridBagConstraints.HORIZONTAL
 
 ## Add icons, labels, and buttons to panels
 panel1.add(i1, a)
@@ -201,9 +296,17 @@ panel3.add(b7, c)
 panel3.add(b8, d)
 panel3.add(b9, e)
 
+panel4.add(panel1)
+panel4.add(panel2)
+panel4.add(panel3)
+
+panel5.add(i4, f)
+panel5.add(b10, g)
+panel5.add(b11, h)
+panel5.add(b12, i)
+
 ## Add panels to GUI window
-frame.add(panel1, BorderLayout.PAGE_START)
-frame.add(panel2, BorderLayout.CENTER)
-frame.add(panel3, BorderLayout.PAGE_END)
+frame.add(panel4, BorderLayout.PAGE_START)
+frame.add(panel5, BorderLayout.PAGE_END)
 frame.pack()
 frame.setVisible(True)
