@@ -4,7 +4,7 @@ from javax.swing.border import EtchedBorder
 from ij import IJ
 
 ## MorFishJ version
-version = "v0.3.0.9999"
+version = "v0.3.0.9000"
 
 ## Path to MorFishJ
 plugin_path = IJ.getDir("plugins") + "/MorFishJ/"
@@ -181,7 +181,7 @@ b10.setToolTipText("GitHub profile")
 b10.setContentAreaFilled(0)
 b10.setBorderPainted(0)
 # GH icon with link to source code
-iconGH = ImageIcon(plugin_path + "Icons/GitHub-Mark-32px.png")
+iconGH = scaledImageIcon(plugin_path + "Icons/github-mark.png", 40)
 b11 = JButton(iconGH, actionPerformed = sourcecode)
 b11.setToolTipText("Source Code")
 b11.setContentAreaFilled(0)

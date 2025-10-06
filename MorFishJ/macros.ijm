@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------------------------//
 //                                                                                         //
-//                                  MorFishJ v0.3.0.9999                                   //
+//                                  MorFishJ v0.3.0.9000                                   //
 //                                                                                         //
 //                             Set of ImageJ macros to measure                             //
 //                          morphological traits from fish images.                         //
