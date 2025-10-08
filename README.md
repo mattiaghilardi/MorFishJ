@@ -6,7 +6,7 @@
 # MorFishJ
 
 <p align="left">
-  <img src="readme_files/MorFishJ_logo.png" width="100" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_logo.png" width="100" alt="MorFishJ logo">
 </p>
 
 ## Description
@@ -28,7 +28,7 @@ To install `MorFishJ`:
 Now `MorFishJ` is installed. Open ImageJ/FIJI and click **Plugins --> MorFishJ --> MorFishJ GUI**. The following GUI should appear in the upper left corner of the screen.
 
 <p align="center">
-  <img src="readme_files/MorFishJ_GUI_v0.3.0.png" width="60%" title="MorFishJ GUI"><br>
+  <img src="readme_files/MorFishJ_GUI_v0.3.0.png" width="60%" alt="MorFishJ GUI">
 </p>
 
 In Fiji it may be easier to use the `Search` field under the toolbar to find and start `MorFishJ` as the Plugins menu is often crowded.
@@ -43,13 +43,12 @@ Three morphometric analyses are currently available in `MorFishJ`:
 
 ## User manual
 
-<img align="left" width="80" src="MorFishJ/Icons/MorFishJ-user-manual.png">
+<p align="left"><a href="https://mattiaghilardi.github.io/MorFishJ_manual/">
+<img width="80" src="MorFishJ/Icons/MorFishJ-user-manual.png" alt="MorFishj user manual">
+</a>
 
-<br>
-
-A step by step guide to the software can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/).
-
-<br>
+Click on the book icon to access the MorFishJ user manual, which provides a step-by-step guide on using the software.
+</p>
 
 ## Licenses
 
