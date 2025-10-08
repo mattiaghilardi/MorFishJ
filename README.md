@@ -43,7 +43,13 @@ Three morphometric analyses are currently available in `MorFishJ`:
 
 ## User manual
 
+<img align="left" width="80" src="MorFishJ/Icons/MorFishJ-user-manual.png">
+
+<br>
+
 A step by step guide to the software can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/).
+
+<br>
 
 ## Licenses
 
