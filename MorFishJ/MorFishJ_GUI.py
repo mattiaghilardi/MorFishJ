@@ -1,5 +1,5 @@
 from javax.swing import SwingWorker, JFrame, JPanel, JLabel, JButton, ImageIcon, BorderFactory
-from java.awt import Dimension, Font, GridBagLayout, Color, BorderLayout, GridBagConstraints, Insets
+from java.awt import Dimension, Font, GridLayout, GridBagLayout, Color, BorderLayout, GridBagConstraints, Insets
 from javax.swing.border import EtchedBorder
 from ij import IJ
 
@@ -255,8 +255,8 @@ g = GridBagConstraints()
 g.gridx = 1 
 g.gridy = 0
 g.gridwidth = 1
-g.weightx = 1
-g.insets = Insets(0, 0, 0, 0)
+g.weightx = 0.7
+g.insets = Insets(5, 0, 5, 0)
 g.fill = GridBagConstraints.HORIZONTAL
 
 # Source code
@@ -264,8 +264,8 @@ h = GridBagConstraints()
 h.gridx = 2   
 h.gridy = 0
 h.gridwidth = 1
-h.weightx = 0
-h.insets = Insets(0, 0, 0, 0)
+h.weightx = 0.1
+h.insets = Insets(5, 0, 5, 0)
 h.fill = GridBagConstraints.HORIZONTAL
 
 # User manual
@@ -273,8 +273,8 @@ i = GridBagConstraints()
 i.gridx = 3   
 i.gridy = 0
 i.gridwidth = 1
-i.weightx = 0
-i.insets = Insets(0, 0, 0, 0)
+i.weightx = 0.1
+i.insets = Insets(5, 0, 5, 15)
 i.fill = GridBagConstraints.HORIZONTAL
 
 ## Add icons, labels, and buttons to panels
