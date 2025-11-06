@@ -1,7 +1,10 @@
-from javax.swing import SwingWorker, JFrame, JPanel, JLabel, JButton, ImageIcon, BorderFactory
-from java.awt import Dimension, Font, GridLayout, GridBagLayout, Color, BorderLayout, GridBagConstraints, Insets
+from javax.swing import SwingWorker, JFrame, JPanel, JLabel, JButton, ImageIcon, BorderFactory, JOptionPane
+from java.awt import Dimension, Font, GridLayout, GridBagLayout, Color, BorderLayout, GridBagConstraints, Insets, Desktop
 from javax.swing.border import EtchedBorder
+from java.net import URI
 from ij import IJ
+from org.jsoup import Jsoup
+import sys
 
 ## MorFishJ version
 version = "v0.3.0.9000"
@@ -53,9 +56,9 @@ macro = ""
 class TraitTask(SwingWorker) :
     def doInBackground(self) :
         # Class implementing long running task as a SwingWorker thread
-        try :
+        try:
             IJ.run(macro)
-        except :
+        except:
             Type, value = sys.exc_info()[:2]
             print 'Error:', str(type)
             print 'value:', str(value)
@@ -106,8 +109,17 @@ def GTC(event):
    macro = "Gut Traits Cont"
    TraitTask().execute()
 
-## Function to rescale image icons
 def scaledImageIcon(path, w):
+   """
+   Creates a scaled ImageIcon from an image
+
+   Args:
+       path (str): The path or url to the image
+       w (int): The width to which to scale the image
+   
+   Returns:
+       A scaled ImageIcon
+   """
    I = ImageIcon(path)
    I = I.getImage()
    sI = I.getScaledInstance(w, -1, I.SCALE_SMOOTH)
@@ -151,8 +163,12 @@ b9.setFont(Font("Dialog", Font.BOLD, 15))
 ## Define action for each button in panel 5
 ## Links to GH profile, source code and documentation
 def openBrowser(url):
-   from java.awt import Desktop
-   from java.net import URI
+   """
+   Open a URL
+
+   Args:
+       url (str): The url of a web page
+   """
    d = Desktop.getDesktop()
    d.browse(URI(url))
    return True
@@ -310,3 +326,152 @@ frame.add(panel4, BorderLayout.PAGE_START)
 frame.add(panel5, BorderLayout.PAGE_END)
 frame.pack()
 frame.setVisible(True)
+
+## Automatically check for available updates
+
+def getLatestVersion():
+   """
+   Retrieves the latest MorFishJ version
+
+   Returns:
+       str: vMAJOR.MINOR.PATCH
+   """
+   url = "https://mattiaghilardi.github.io/MorFishJ_manual/"
+   # Send an HTTP GET request to the webpage
+   response = Jsoup.connect(url).get()
+   
+   # Extract latest version
+   paragraphs = response.select("p")
+   latestVersion = paragraphs[0]
+   latestVersion = latestVersion.text().strip("MorFishJ ")
+   return latestVersion
+
+def compareVersions(version1, version2):
+   """
+   Compares two version strings, typically in the format:
+      - MAJOR.MINOR.PATCH - e.g. 0.3.0
+      - vMAJOR.MINOR.PATCH - e.g. v0.3.0
+   
+   Args:
+       version1 (str): The first version string to compare
+       version2 (str): The second version string to compare
+   
+   Returns:
+       int: < 0 if version1 is earlier than version 2
+            0 if version1 and version2 are the same
+            > 0 if version1 is later than version 2
+   
+   Examples:
+       >>> compareVersions("0.3.0", "0.4.0") 
+       -1
+       >>> compareVersions("0.3.0", "0.3.0")
+       0
+       >>> compareVersions("0.3.2", "0.3.0")
+       2
+   """
+   v1parts = version1.replace("v", "").split(".")
+   v2parts = version2.replace("v", "").split(".")
+   numParts = min(len(v1parts), len(v2parts))
+   
+   for i in range(numParts):
+      result = int(v1parts[i]) - int(v2parts[i])
+      if (result != 0):
+         return result
+   return 0
+
+def getIgnored(plugin_path):
+   """
+   Get persistently ignored update
+
+   Args:
+       plugin_path (str): Path to the MorFishJ plugin
+
+   Returns:
+       str: The stored version that should be persistently ignored
+   """
+   # Path to file
+   file_path = plugin_path + "user.state/updates.persistent.txt"
+   
+   try:
+   	# Open the file in read mode
+   	file = open(file_path, "r")
+   except:
+   	print "Unexpected error: ", sys.exc_info()[0], sys.exc_info()[1]
+   	return None
+   else:
+   	# Read the file
+   	ignored = file.read()
+   	# Close the file
+   	file.close()
+   	return ignored
+
+def storeIgnored(plugin_path, version):
+   """
+   Store persistently ignored update
+
+   Args:
+       plugin_path (str): Path to the MorFishJ plugin
+       version (str): The version string to ignore
+
+   """
+   # Path to file
+   file_path = plugin_path + "user.state/updates.persistent.txt"
+      
+   try:
+   	# Open the file in write mode
+   	file = open(file_path, "w")
+   except:
+   	print "Unexpected error: ", sys.exc_info()[0], sys.exc_info()[1]
+   else:
+   	# Overwrite the file
+   	file.seek(0)
+   	file.write(latestVersion)
+   	file.truncate()
+   	# Close the file
+   	file.close()
+
+# Retrieve latest version
+latestVersion = getLatestVersion()
+
+# Compare with current version
+versionDiff = compareVersions(version, latestVersion)
+
+# If a newer version is available ...
+if versionDiff < 0:
+   # Check previously ignored updates
+   ignored = getIgnored(plugin_path)
+   # Ignore this update if previously ignored, otherwise ...
+   if ignored != latestVersion:
+      # Display a dialog with the options to update, remind or ignore
+      label = "MorFishJ " + latestVersion + " is now available (you are using " + version + " )"
+      title = "Update Available"
+      options = ["Quit and Download ...", "Remind Later", "Ignore Update"]
+      icon = scaledImageIcon(plugin_path + "Icons/MorFishJ_logo.png", 40)
+      choice = JOptionPane.showOptionDialog(None, # parentComponent
+                                            label, # message
+                                            title, # title
+                                            JOptionPane.DEFAULT_OPTION, # optionType
+                                            JOptionPane.QUESTION_MESSAGE, # messageType
+                                            icon, # icon
+                                            options, # options
+                                            options[0]) # initialValue
+      # User choose to download the updated version
+      # Open url to latest release and quit ImageJ
+      if choice == 0:
+         url = "https://github.com/mattiaghilardi/MorFishJ/releases/tag/" + latestVersion
+         openBrowser(url)
+         IJ.run("Quit", "")
+      # User choose to be reminded of the update
+      # Display information message
+      elif choice == 1:
+         label = "Continue with MorFishJ " + version
+         title = "Update Later"
+         JOptionPane.showMessageDialog(None, # parentComponent
+                                       label, # message
+                                       title, # title
+                                       JOptionPane.INFORMATION_MESSAGE, # messageType
+                                       None) # icon
+      # User choose to ignore the update
+      # Persistently store the ignored version
+      elif choice == 2:
+      	storeIgnored(plugin_path, latestVersion)
