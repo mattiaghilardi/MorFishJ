@@ -1,3 +1,15 @@
+# MorFishJ v0.3.0.9000
+
+## New Features
+
+- The GUI now has the MorFishJ logo and icons with links to documentation.
+- Rotated images are now enlarged to avoid cropping.
+- Automatic check for updates at startup.
+
+## Other Changes
+
+- Updated some dialogs: changed insets and replaced choice with radio button.
+
 # MorFishJ v0.3.0
 
 ## New Features
