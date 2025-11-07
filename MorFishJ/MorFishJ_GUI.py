@@ -425,7 +425,7 @@ def storeIgnored(plugin_path, version):
    else:
    	# Overwrite the file
    	file.seek(0)
-   	file.write(latestVersion)
+   	file.write(version)
    	file.truncate()
    	# Close the file
    	file.close()
