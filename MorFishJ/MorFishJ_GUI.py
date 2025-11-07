@@ -379,9 +379,28 @@ def compareVersions(version1, version2):
          return result
    return 0
 
-def getIgnored(plugin_path):
+def hasChanged(currentVersion, latestVersion):
    """
-   Get persistently ignored update
+   Checks if the current version has changed
+
+   Args:
+       currentVersion (str): The current version string
+       latestVersion (str): The latest version string
+   
+   Returns:
+       log: If the version has changed
+   """
+   # Compare with current version
+   versionDiff = compareVersions(currentVersion, latestVersion)
+   
+   if versionDiff < 0:
+      return True
+   else:
+      return False
+
+def getIgnoredUpdates(plugin_path):
+   """
+   Retrieves persistently ignored updates
 
    Args:
        plugin_path (str): Path to the MorFishJ plugin
@@ -405,9 +424,28 @@ def getIgnored(plugin_path):
    	file.close()
    	return ignored
 
-def storeIgnored(plugin_path, version):
+def isIgnored(plugin_path, version):
    """
-   Store persistently ignored update
+   Checks if an update is ignored by the user
+
+   Args:
+       plugin_path (str): Path to the MorFishJ plugin
+       version (str): The version string to check
+
+   Returns:
+       log: If the version is ignored by the user
+   """
+   # Check user state
+   ignoredUpdates = getIgnoredUpdates(plugin_path)
+   
+   if version == ignoredUpdates:
+      return True
+   else:
+      return False
+   
+def setIgnoredUpdates(plugin_path, version):
+   """
+   Sets persistently ignored updates
 
    Args:
        plugin_path (str): Path to the MorFishJ plugin
@@ -423,55 +461,62 @@ def storeIgnored(plugin_path, version):
    except:
    	print "Unexpected error: ", sys.exc_info()[0], sys.exc_info()[1]
    else:
-   	# Overwrite the file
+   	# Overwrite the file to remove older ignored updates
    	file.seek(0)
    	file.write(version)
    	file.truncate()
    	# Close the file
    	file.close()
 
-# Retrieve latest version
-latestVersion = getLatestVersion()
+def checkForUpdates(plugin_path, currentVersion):
+   """
+   Checks if an update is available, then displays a dialog box to inform the user and allow them to update or not
 
-# Compare with current version
-versionDiff = compareVersions(version, latestVersion)
+   Args:
+       currentVersion (str): The current version string
+   
+   Returns:
+       The version string of the available update, or False if using the latest version
+   """
+   # Retrieve latest version
+   latestVersion = getLatestVersion()
+   
+   # If changed from current version
+   if hasChanged(currentVersion, latestVersion):
+      # If this update was not previously ignored by the user ...
+      if not isIgnored(plugin_path, latestVersion):
+         # Display a dialog with the options to update, remind or ignore
+         label = "MorFishJ " + latestVersion + " is now available (you are using " + currentVersion + " )"
+         title = "Update Available"
+         options = ["Quit and Download ...", "Remind Later", "Ignore Update"]
+         icon = scaledImageIcon(plugin_path + "Icons/MorFishJ_logo.png", 40)
+         choice = JOptionPane.showOptionDialog(None, # parentComponent
+                                               label, # message
+                                               title, # title
+                                               JOptionPane.DEFAULT_OPTION, # optionType
+                                               JOptionPane.QUESTION_MESSAGE, # messageType
+                                               icon, # icon
+                                               options, # options
+                                               options[0]) # initialValue
+         # User choose to download the updated version
+         # Open url to latest release and quit ImageJ
+         if choice == 0:
+            url = "https://github.com/mattiaghilardi/MorFishJ/releases/tag/" + latestVersion
+            openBrowser(url)
+            IJ.run("Quit", "")
+         # User choose to be reminded of the update
+         # Display information message
+         elif choice == 1:
+            label = "Continue with MorFishJ " + version
+            title = "Update Later"
+            JOptionPane.showMessageDialog(None, # parentComponent
+                                          label, # message
+                                          title, # title
+                                          JOptionPane.INFORMATION_MESSAGE, # messageType
+                                          None) # icon
+         # User choose to ignore the update
+         # Persistently store the ignored version
+         elif choice == 2:
+      	    setIgnoredUpdates(plugin_path, latestVersion)
 
-# If a newer version is available ...
-if versionDiff < 0:
-   # Check previously ignored updates
-   ignored = getIgnored(plugin_path)
-   # Ignore this update if previously ignored, otherwise ...
-   if ignored != latestVersion:
-      # Display a dialog with the options to update, remind or ignore
-      label = "MorFishJ " + latestVersion + " is now available (you are using " + version + " )"
-      title = "Update Available"
-      options = ["Quit and Download ...", "Remind Later", "Ignore Update"]
-      icon = scaledImageIcon(plugin_path + "Icons/MorFishJ_logo.png", 40)
-      choice = JOptionPane.showOptionDialog(None, # parentComponent
-                                            label, # message
-                                            title, # title
-                                            JOptionPane.DEFAULT_OPTION, # optionType
-                                            JOptionPane.QUESTION_MESSAGE, # messageType
-                                            icon, # icon
-                                            options, # options
-                                            options[0]) # initialValue
-      # User choose to download the updated version
-      # Open url to latest release and quit ImageJ
-      if choice == 0:
-         url = "https://github.com/mattiaghilardi/MorFishJ/releases/tag/" + latestVersion
-         openBrowser(url)
-         IJ.run("Quit", "")
-      # User choose to be reminded of the update
-      # Display information message
-      elif choice == 1:
-         label = "Continue with MorFishJ " + version
-         title = "Update Later"
-         JOptionPane.showMessageDialog(None, # parentComponent
-                                       label, # message
-                                       title, # title
-                                       JOptionPane.INFORMATION_MESSAGE, # messageType
-                                       None) # icon
-      # User choose to ignore the update
-      # Persistently store the ignored version
-      elif choice == 2:
-      	storeIgnored(plugin_path, latestVersion)
+checkForUpdates(plugin_path, version)
