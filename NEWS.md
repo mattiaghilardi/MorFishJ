@@ -1,4 +1,4 @@
-# MorFishJ v0.3.0.9000
+# MorFishJ v0.4.0
 
 ## New Features
 
@@ -9,6 +9,8 @@
 ## Other Changes
 
 - Updated some dialogs: changed insets and replaced choice with radio button.
+
+The user manual for this release can be found [here](https://mattiaghilardi.github.io/MorFishJ_manual/v0.4.0/).
 
 # MorFishJ v0.3.0
 

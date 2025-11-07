@@ -7,7 +7,7 @@ from org.jsoup import Jsoup
 import sys
 
 ## MorFishJ version
-version = "v0.3.0.9000"
+version = "v0.4.0"
 
 ## Path to MorFishJ
 plugin_path = IJ.getDir("plugins") + "/MorFishJ/"
