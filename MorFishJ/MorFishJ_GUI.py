@@ -390,7 +390,7 @@ def getIgnored(plugin_path):
        str: The stored version that should be persistently ignored
    """
    # Path to file
-   file_path = plugin_path + "user.state/updates.persistent.txt"
+   file_path = plugin_path + "user.state/updates.persistent"
    
    try:
    	# Open the file in read mode
@@ -415,7 +415,7 @@ def storeIgnored(plugin_path, version):
 
    """
    # Path to file
-   file_path = plugin_path + "user.state/updates.persistent.txt"
+   file_path = plugin_path + "user.state/updates.persistent"
       
    try:
    	# Open the file in write mode
